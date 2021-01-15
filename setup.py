@@ -11,7 +11,7 @@ setup(
 
     name='imgann',
 
-    version='0.5.3',
+    version='0.5.4',
 
     description='image annotation file operation provider.',
 
@@ -19,7 +19,7 @@ setup(
 
     long_description_content_type='text/markdown',
 
-    url='https://github.com/nipdep/img-ann.git',
+    url='https://github.com/nipdep/imgann.git',
 
     author='nipdep',
 
@@ -73,9 +73,9 @@ setup(
     # },
 
     project_urls={  # Optional
-        'Bug Reports': 'https://github.com/nipdep/img-ann/issues',
+        'Bug Reports': 'https://github.com/nipdep/imgann/issues',
         # 'Funding': 'https://donate.pypi.org',
         # 'Say Thanks!': 'http://saythanks.io/to/example',
-        'Source': 'https://github.com/nipdep/img-ann/',
+        'Source': 'https://github.com/nipdep/imgann/',
     },
 )
