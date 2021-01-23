@@ -77,7 +77,7 @@ class PascalVOC(IOperator, ABC):
         """
         for index, row in self._dataset.iterrows():
             ann_list = self.__filterImgObj(row['image_id'])
-            box = self.__xmlFomatter(row, ann_list)
+            box = self.__xmlFormatter(row, ann_list)
             if box:
                 yield box, row['name']
             else:
@@ -142,14 +142,14 @@ class PascalVOC(IOperator, ABC):
 
             obj_list = []
             for obj in ann_root.findall('object'):
-                obj_list.append(self.__get_coco_annotation_from_obj(obj))
+                obj_list.append(self.__get_voc_annotation_from_obj(obj))
         except Exception as error:
             logger.exception(error)
             assert error
 
         return [img_data, obj_list]
 
-    def __get_coco_annotation_from_obj(self, obj):
+    def __get_voc_annotation_from_obj(self, obj):
         """ read <object> block in xml file
 
         :param obj: <object> block in the .xml file
@@ -187,7 +187,7 @@ class PascalVOC(IOperator, ABC):
         filtered_list = self.annotations.loc[self.annotations["image_id"] == int(img_id), :].values.tolist()
         return filtered_list
 
-    def __xmlFomatter(self, image_data, ann_data):
+    def __xmlFormatter(self, image_data, ann_data):
         """ build the structure of the .xml file with data.
 
         :param image_data: dictionary for data in self._dataset
