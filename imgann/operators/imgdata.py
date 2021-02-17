@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
 """:cvar
-image_df attributes:
+(self.dataset) image_df attributes:
     - image_id : int
     - name : str
     - folder : str
@@ -20,7 +20,6 @@ image_df attributes:
     - width : int
     - height : int
     - format : class [(default) RGB, GBR, SHA ]
-
 """
 
 
@@ -157,3 +156,29 @@ class ImgData:
                 img_list.append(file)
 
         return img_list
+
+    def describe(self):
+        """
+        give of summary of data folders
+        :return: (dictionary)
+        desc_dict = { number of images : str,
+                    number of folders : int,
+                    folder image count : dict{}
+                    }
+        """
+        desc_dict = {}
+
+        num_of_imgs = self.dataset.shape[0]
+        desc_dict["number of images"] = num_of_imgs
+
+        folders = self.dataset.loc[:, "folder"].unique().tolist()
+        desc_dict["number of folders"] = len(folders)
+
+        fld_img_cnt_df = self.dataset.loc[:, ["name","folder"]].groupby("folder").count()
+        desc_dict["folder image counts"] = fld_img_cnt_df.to_dict()["name"]
+
+        return desc_dict
+
+
+
+

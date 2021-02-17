@@ -22,11 +22,10 @@ logger.setLevel(logging.INFO)
 
 
 class Sample:
-
     """ Data Annotation file sampling interface """
 
-    @classmethod
-    def show_samples(cls, data_path: str,
+    @staticmethod
+    def show_samples(data_path: str,
                      ann_path: str,
                      num_of_samples: int = 5,
                      ann_type: str = 'coco'):
@@ -60,4 +59,30 @@ class Sample:
             obj_data = img_obj["bbox"]
             cat_name = [cat_dict[j] for j in img_obj["classes"]]
             obj.render(path, obj_data, cat_name)
+        return
+
+    @staticmethod
+    def describe_data(data_path: str):
+        img_dataset = ImgData.extract(data_path)
+        img_dataset.describe()
+        return
+
+    @staticmethod
+    def describe_ann(data_path: str,
+                     ann_path: str, ann_type: str = 'coco'):
+        ## TODO : show aggregated data for annotations.
+        imgdataset = ImgData.extract(data_path)
+        if ann_type == 'coco':
+            obj = coco.COCO(imgdataset.dataset)
+        elif ann_type == 'voc':
+            obj = pascalvoc.PascalVOC(imgdataset.dataset)
+        elif ann_type == 'csv':
+            obj = csv.CSV(imgdataset.dataset)
+        elif ann_type == 'yolo':
+            obj = csv.IOperator(imgdataset.dataset)
+        else:
+            assert Exception(f"ERROR: {ann_type} is not a valid annotation type.")
+
+        obj.extract(ann_path)
+        obj.describe()
         return
