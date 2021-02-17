@@ -70,7 +70,6 @@ class Sample:
     @staticmethod
     def describe_ann(data_path: str,
                      ann_path: str, ann_type: str = 'coco'):
-        ## TODO : show aggregated data for annotations.
         imgdataset = ImgData.extract(data_path)
         if ann_type == 'coco':
             obj = coco.COCO(imgdataset.dataset)

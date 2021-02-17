@@ -16,8 +16,8 @@ class Convertor:
 
     """ convert method implementation class """
 
-    @classmethod
-    def coco2csv(cls, dataset_dir: str,
+    @staticmethod
+    def coco2csv(dataset_dir: str,
                  coco_ann_dir: str,
                  save_dir: str):
         """ convert coco to csv

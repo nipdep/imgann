@@ -35,7 +35,6 @@ class PascalVOC(IOperator, ABC):
         img_list = []
         tol_obj_list = []
         for file in files_list:
-            
             img_data, obj_list = self.__FileReader(os.path.abspath(path) + "\\" + file)
             image_id += 1
             img_data.append(image_id)

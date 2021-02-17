@@ -104,9 +104,61 @@ class IOperator(object):
         # TODO: make nice format to show descibe result.
         pass
 
+    """:param
+    ann_df attributes:
+        - obj_id : int
+        - image_id : int
+        - class_id : int
+        - x_min : int
+        - y_min : int
+        - x_max : int
+        - y_max : int
+    """
+    """:cvar
+    (self.dataset) image_df attributes:
+        - image_id : int
+        - name : str
+        - folder : str
+        - path : str (separated by / )
+        - width : int
+        - height : int
+        - format : class [(default) RGB, GBR, SHA ]
+    """
     def describe(self):
-        # TODO: annotation file description
-        pass
+        """
+        give of summary of data folders
+        :return: (dictionary)
+        desc_dict = { number of images : str,
+                    number of folders : int,
+                    folder image count : dict{}
+                    }
+        """
+        desc_dict = {}
+
+        num_of_imgs = self._dataset.shape[0]
+        desc_dict["number of images"] = num_of_imgs
+
+        fld_img_cnt_df = self._dataset.loc[:, ["name", "folder"]].groupby("folder").count()
+        desc_dict["folder image counts"] = fld_img_cnt_df.to_dict()["name"]
+
+        num_sizes = self._dataset.loc[:, ["width", "height"]].nunique().tolist()
+        if num_sizes == [1, 1]:
+            img_size = self._dataset.loc[1, ["width", "height"]].tolist()
+            desc_dict["number of image sizes"] = 1
+            desc_dict["image_size"] = "{:0} X {:1}".format(img_size[0], img_size[1])
+        else:
+            desc_dict["number of image sizes"] = len(self._dataset.groupby(["width", "height"]))
+
+        desc_dict["number of object classes"] = len(self.classes)
+        desc_dict["object classes"] = self.classes
+
+        desc_dict["number of objects"] = self.annotations.shape[0]
+
+        class_gb = self.annotations.loc[:, ["obj_id", "class_id"]].groupby("class_id").count().reset_index()
+        class_gb["classes"] = class_gb["class_id"].map(self.classes)
+        class_cnt = class_gb.set_index("classes")["obj_id"].to_dict()
+        desc_dict["class object count"] = class_cnt
+        return desc_dict
 
     def sample(self, numOfSamples):
         """
