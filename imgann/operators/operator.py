@@ -100,30 +100,8 @@ class IOperator(object):
     def archive(self, location, data):
         raise NotImplementedError
 
-    def descFormat(self):
-        # TODO: make nice format to show descibe result.
-        pass
 
-    """:param
-    ann_df attributes:
-        - obj_id : int
-        - image_id : int
-        - class_id : int
-        - x_min : int
-        - y_min : int
-        - x_max : int
-        - y_max : int
-    """
-    """:cvar
-    (self.dataset) image_df attributes:
-        - image_id : int
-        - name : str
-        - folder : str
-        - path : str (separated by / )
-        - width : int
-        - height : int
-        - format : class [(default) RGB, GBR, SHA ]
-    """
+
     def describe(self):
         """
         give of summary of data folders
@@ -150,7 +128,7 @@ class IOperator(object):
             desc_dict["number of image sizes"] = len(self._dataset.groupby(["width", "height"]))
 
         desc_dict["number of object classes"] = len(self.classes)
-        desc_dict["object classes"] = self.classes
+        desc_dict["object classes"] = " | ".join(self.classes.values())
 
         desc_dict["number of objects"] = self.annotations.shape[0]
 
@@ -221,3 +199,5 @@ class IOperator(object):
             bounding_boxes.append([(obj[3], obj[4]), (obj[5], obj[6])])
         final_dict = {"classes": classes, "bbox": bounding_boxes}
         return final_dict
+
+

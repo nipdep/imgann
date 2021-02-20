@@ -64,7 +64,9 @@ class Sample:
     @staticmethod
     def describe_data(data_path: str):
         img_dataset = ImgData.extract(data_path)
-        img_dataset.describe()
+        data_dict = img_dataset.describe()
+        log_st = Sample.descFormat("image data summary", data_dict)
+        logger.info("\n"+log_st)
         return
 
     @staticmethod
@@ -83,5 +85,48 @@ class Sample:
             assert Exception(f"ERROR: {ann_type} is not a valid annotation type.")
 
         obj.extract(ann_path)
-        obj.describe()
+        log_data = obj.describe()
+        log_st = Sample.descFormat("image annotation summary", log_data)
+        logger.info("\n"+log_st)
         return
+
+    @staticmethod
+    def descFormat(header, data):
+        """
+        give formatted string for data
+
+        :param header: header name of the summary
+        :param data: dictionary of data {field : value}
+        :return: formatted string of all data.
+        """
+        log_string = ""
+        log_header = "{0:^80s}\n{1:s}\n".format(header.upper(), '=' * 80)
+        log_string += log_header
+
+        wd = Sample.__getMax(data.keys())
+        log_data = ""
+        for sec in data:
+            if type(data[sec]) == str:
+                st = "{0:<{1:d}s} : {2:}\n".format(sec, wd, data[sec])
+                log_data += st
+            elif type(data[sec]) == dict:
+                sub_wd = Sample.__getMax(data[sec].keys())
+                sub_topic = "{0:<{1:d}s} :\n".format(sec, wd)
+                log_data += sub_topic
+                for sub_elem in data[sec]:
+                    sub_data = "{0:<{1:d}s} > {2:<{3:d}} : {4:}\n".format(" ", wd, sub_elem, sub_wd, data[sec][sub_elem])
+                    log_data += sub_data
+        log_data += "{0:s}\n".format("="*80)
+        log_string += log_data
+        return log_string
+
+    @staticmethod
+    def __getMax(ls):
+        """
+
+        :param ls: list of string
+        :return: length of maximum length string in the list
+        """
+        elem = max(ls, key=len)
+        return len(elem)
+
