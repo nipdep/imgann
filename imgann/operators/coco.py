@@ -6,6 +6,7 @@ import json
 import os
 import pandas as pd
 import logging
+import sys
 
 
 # setup logger
@@ -38,6 +39,8 @@ class COCO(IOperator, ABC):
             self.__extractClasses(ann_data["categories"])
         else:
             logger.error(f"Error: entered path <{path}> is invalid.")
+            sys.exit(1)
+
         return
 
     def archive(self, location, data):
@@ -52,9 +55,11 @@ class COCO(IOperator, ABC):
                 with open(location, 'w') as pf:
                     json.dump(data, pf)
             else:
-                logger.exception("The DataFrame file is empty.")
+                logger.error("The DataFrame file is empty.")
+                sys.exit(1)
         else:
-            logger.exception("There are no such parent directory to file save.")
+            logger.error("There are no such parent directory to file save.")
+            sys.exit(1)
 
     def translate(self):
         """ translate common schema into json compatible format.
@@ -134,6 +139,7 @@ class COCO(IOperator, ABC):
                     img_height[obj["file_name"]] = obj["height"]
                 except Exception as error:
                     logger.exception("ERROR: annotation file doesn't in accept the format.")
+                    sys.exit(1)
         if len(dataset_imgs) > len(ann_imgs):
             self._dataset = self._dataset.loc[self._dataset.loc[:, "name"].isin(ann_imgs), :]
             logger.warning("WARNING: all the images had not annotated!")
@@ -159,6 +165,7 @@ class COCO(IOperator, ABC):
                 min_tup, max_tup = self.__normalized2KITTI(obj["bbox"])
             except Exception as error:
                 logger.exception("ERROR: annotation file doesn't in accept the format.")
+                sys.exit(1)
             else:
                 ann_list.append((obj_id, img_id, cls_id, min_tup[0], min_tup[1], max_tup[0], max_tup[1]))
 
@@ -183,10 +190,12 @@ class COCO(IOperator, ABC):
                     class_dict[obj["id"]] = obj["name"]
                 except Exception as error:
                     logger.exception("ERROR: annotation file doesn't in accept the format.")
+                    sys.exit(1)
 
             super(COCO, self).set_classes(class_dict)
         else:
             logger.error("There are no distinctive class definition in the annotation.")
+            sys.exit(1)
             super(COCO, self).set_classes({})
 
     def __KITTI2normilized(self, xmin, ymin, xmax, ymax):
@@ -217,4 +226,5 @@ class COCO(IOperator, ABC):
             else:
                 return ret_dict
         else:
-            logger.exception(f"There are not enough attributes to create .json file.\n #tags : {nt} & #attrs : {nv}")
+            logger.error(f"There are not enough attributes to create .json file.\n #tags : {nt} & #attrs : {nv}")
+            sys.exit(1)

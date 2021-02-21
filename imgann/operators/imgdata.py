@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import os
+import sys
 import random
 import logging
 import pandas as pd
@@ -44,6 +45,7 @@ class ImgData:
         data_df = pd.DataFrame()
         if type(folders) == str:
             logger.error("you have entered a file directory. Enter Folder directory.")
+            sys.exit(1)
         else:
             data_list = []
             if len(folders) == 1:
@@ -53,6 +55,7 @@ class ImgData:
                     data_list.extend(ImgData.list_creator(os.path.abspath(dataset_path), folders[0], imgFiles))
                 else:
                     logger.error("Error: there are no files in given directory!")
+                    sys.exit(1)
             else:
                 for folder in folders:
                     files = ImgData.ext_files(os.path.abspath(dataset_path) + "\\" + folder)
@@ -67,6 +70,7 @@ class ImgData:
                 data_df = pd.DataFrame.from_records(data_list, columns=['name', 'folder', 'path'])
             else:
                 logger.error("there was some error, record tuples are empty.")
+                sys.exit(1)
         return cls(root=dataset_path, dataset=data_df)
 
     @staticmethod
@@ -102,7 +106,8 @@ class ImgData:
             else:     # case : there are sub folders in the folder.
                 folders = folders[0]
         except Exception as error:
-            logger.exception("There is no folder in given directory.")
+            logger.exception(error)
+            sys.exit(1)
         return folders
 
     @staticmethod
@@ -128,6 +133,7 @@ class ImgData:
                     files = files[0]
         except Exception as error:
             logger.exception("Error : There are no files in the given directory")
+            sys.exit(1)
 
         return files
 

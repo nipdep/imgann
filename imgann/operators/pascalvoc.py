@@ -6,6 +6,7 @@ import xml.etree.ElementTree as ET
 import pandas as pd
 import os
 import re
+import sys
 import logging
 
 # setup logger
@@ -46,6 +47,7 @@ class PascalVOC(IOperator, ABC):
             self.__updateDataset(img_df)
         else:
             logger.error("[var]: img_list is empty.")
+            sys.exit(1)
 
         if obj_list and len(obj_list[0]) == 6:
             obj_df = pd.DataFrame.from_records(tol_obj_list,
@@ -53,6 +55,7 @@ class PascalVOC(IOperator, ABC):
             self.__DFRefiner(obj_df)
         else:
             logger.error(f"obj_list has not many attrs. : {len(obj_list[0])} or obj_list is empty : {len(obj_list)}")
+            sys.exit(1)
 
     def archive(self, location: str, data):
         """ save pascalVOC annotation file in the given location
@@ -67,7 +70,7 @@ class PascalVOC(IOperator, ABC):
                 pf.write(tree_str)
         except Exception as error:
             logger.exception(error)
-            assert error
+            sys.exit(1)
 
     def translate(self):
         """ translate common schema into json compatible format.
@@ -96,11 +99,14 @@ class PascalVOC(IOperator, ABC):
                     if xml_list:
                         return xml_list
                     else:
-                        assert Exception("There are no .xml files in the given directory.")
+                        logger.error("There are no .xml files in the given directory.")
+                        sys.exit(1)
                 else:
-                    assert Exception("The folder is empty.")
+                    logger.error("The folder is empty.")
+                    sys.exit(1)
         else:
-            assert Exception(f"The entered path <{path}> is not valid.")
+            logger.error(f"The entered path <{path}> is not valid.")
+            sys.exit(1)
 
     def __DFRefiner(self, ann_df):
         """
@@ -144,7 +150,7 @@ class PascalVOC(IOperator, ABC):
                 obj_list.append(self.__get_voc_annotation_from_obj(obj))
         except Exception as error:
             logger.exception(error)
-            assert error
+            sys.exit(1)
 
         return [img_data, obj_list]
 
@@ -165,7 +171,7 @@ class PascalVOC(IOperator, ABC):
             return ann
         except Exception as error:
             logger.exception(error)
-            assert error
+            sys.exit(1)
 
     def __updateDataset(self, image_df):
         """
@@ -216,7 +222,7 @@ class PascalVOC(IOperator, ABC):
             return ann
         except Exception as error:
             logger.exception(error)
-            assert error
+            sys.exit(1)
 
     def __tagFilter(self,st: str):
         s = re.sub(r'\t*\n*\r*', '', st)

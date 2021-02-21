@@ -7,6 +7,7 @@ import cv2
 import pandas as pd
 import logging
 import random
+import sys
 
 # set logger
 logging.basicConfig()
@@ -67,10 +68,11 @@ class IOperator(object):
             if self.annotations.shape[0] and self.classes:
                 return self.annotations, self.classes
             else:
+                # TODO : check here.
                 return
         except Exception as error:
             logger.exception(error)
-            assert error
+            sys.exit(1)
 
     def set_annotations(self, ann):
         """
