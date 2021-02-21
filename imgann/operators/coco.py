@@ -38,7 +38,7 @@ class COCO(IOperator, ABC):
             self.__extractAnnotation(ann_data["annotations"])
             self.__extractClasses(ann_data["categories"])
         else:
-            logger.error(f"Error: entered path <{path}> is invalid.")
+            logger.error(f"\n ERROR : entered path <{path}> is invalid.")
             sys.exit(1)
 
         return
@@ -55,10 +55,10 @@ class COCO(IOperator, ABC):
                 with open(location, 'w') as pf:
                     json.dump(data, pf)
             else:
-                logger.error("The DataFrame file is empty.")
+                logger.error("\n ERROR : The DataFrame file is empty.")
                 sys.exit(1)
         else:
-            logger.error("There are no such parent directory to file save.")
+            logger.error("\n ERROR : There are no such parent directory to file save.")
             sys.exit(1)
 
     def translate(self):
@@ -138,11 +138,11 @@ class COCO(IOperator, ABC):
                     img_width[obj["file_name"]] = obj["width"]
                     img_height[obj["file_name"]] = obj["height"]
                 except Exception as error:
-                    logger.exception("ERROR: annotation file doesn't in accept the format.")
+                    logger.exception("\n ERROR : annotation file doesn't in accept the format.")
                     sys.exit(1)
         if len(dataset_imgs) > len(ann_imgs):
             self._dataset = self._dataset.loc[self._dataset.loc[:, "name"].isin(ann_imgs), :]
-            logger.warning("WARNING: all the images had not annotated!")
+            logger.warning("\nWARNING: all the images had not annotated!")
         self._dataset = self._dataset.copy()
         self._dataset["image_id"] = self._dataset["name"].map(ann_id)
         self._dataset.loc[:, "width"] = self._dataset.loc[:, "name"].map(img_width)
@@ -164,7 +164,7 @@ class COCO(IOperator, ABC):
                 cls_id = obj["category_id"]
                 min_tup, max_tup = self.__normalized2KITTI(obj["bbox"])
             except Exception as error:
-                logger.exception("ERROR: annotation file doesn't in accept the format.")
+                logger.exception("\n ERROR : annotation file doesn't in accept the format.")
                 sys.exit(1)
             else:
                 ann_list.append((obj_id, img_id, cls_id, min_tup[0], min_tup[1], max_tup[0], max_tup[1]))
@@ -189,12 +189,12 @@ class COCO(IOperator, ABC):
                 try:
                     class_dict[obj["id"]] = obj["name"]
                 except Exception as error:
-                    logger.exception("ERROR: annotation file doesn't in accept the format.")
+                    logger.exception("\n ERROR : annotation file doesn't in accept the format.")
                     sys.exit(1)
 
             super(COCO, self).set_classes(class_dict)
         else:
-            logger.error("There are no distinctive class definition in the annotation.")
+            logger.error("\n ERROR : There are no distinctive class definition in the annotation.")
             sys.exit(1)
             super(COCO, self).set_classes({})
 
@@ -226,5 +226,5 @@ class COCO(IOperator, ABC):
             else:
                 return ret_dict
         else:
-            logger.error(f"There are not enough attributes to create .json file.\n #tags : {nt} & #attrs : {nv}")
+            logger.error(f"\n ERROR : There are not enough attributes to create .json file.\n #tags : {nt} & #attrs : {nv}")
             sys.exit(1)

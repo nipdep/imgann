@@ -38,11 +38,11 @@ class CSV(IOperator, ABC):
                 self.__updateDataset(new_ann_df.loc[:, ["name", "width", "height", "image_id"]])
                 self.__setAnn(new_ann_df)
             else:
-                logger.error(f"entered annotation file does not contains all the required attributes. \n {self.attrs}")
+                logger.error(f"\n ERROR : Entered annotation file does not contains all the required attributes. \n {self.attrs}")
                 sys.exit()
                 
         else:
-            logger.error(f"entered directory {path}, does not exsist.")
+            logger.error(f"\n ERROR : Entered directory {path}, does not exsist.")
             sys.exit()
 
     def archive(self, location, df):
@@ -55,7 +55,7 @@ class CSV(IOperator, ABC):
         if os.path.exists(os.path.dirname(location)):
                 df.to_csv(location, index=False)
         else:
-            logger.error("There are no such parent directory to file save.")
+            logger.error("\n ERROR : There are no such parent directory to file save.")
             sys.exit(1)
 
     def translate(self):
@@ -81,7 +81,7 @@ class CSV(IOperator, ABC):
         csv_ann_df.loc[:, "height"] = csv_ann_df["image_id"].map(height_series)
 
         if (pd.isnull(csv_ann_df["class"]).sum() + pd.isnull(csv_ann_df["filename"]).sum()) != 0:
-            logger.error(f"There are not enough data in past annotation file to create annotation file. {pd.isnull(csv_ann_df['class']).sum()}, {pd.isnull(csv_ann_df['filename']).sum()}")
+            logger.error(f"\n ERROR : There are not enough data in past annotation file to create annotation file. {pd.isnull(csv_ann_df['class']).sum()}, {pd.isnull(csv_ann_df['filename']).sum()}")
             sys.exit(1)
         else:
             csv_ann_df.rename(columns={"x_min": "xmin", "y_min": "ymin", "x_max": "xmax", "y_max": "ymax"},
@@ -126,7 +126,7 @@ class CSV(IOperator, ABC):
             ids = range(1, n_ids + 1)
             super(CSV, self).set_classes(dict(zip(ids, classes)))
         else:
-            logger.error(f"length of class names[{len(classes)}] and class ids[{n_ids}] are not equal.")
+            logger.error(f"\nlength of class names[{len(classes)}] and class ids[{n_ids}] are not equal.")
             sys.exit(1)
 
     def __setAnn(self, full_df):
@@ -141,7 +141,7 @@ class CSV(IOperator, ABC):
             ann_df = full_df.loc[:, col_lis]
             super(CSV, self).set_annotations(ann_df)
         else:
-            logger.error(f"there are missing of required columns in {full_df.columns}")
+            logger.error(f"\nthere are missing of required columns in {full_df.columns}")
             sys.exit(1)
 
     def __updateDataset(self, image_df):

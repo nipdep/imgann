@@ -96,7 +96,7 @@ class Sample:
         elif ann_type == 'yolo':
             obj = csv.IOperator(imgdataset.dataset)
         else:
-            logger.error(f"ERROR: {ann_type} is not a valid annotation type.")
+            logger.error(f"\n ERROR : {ann_type} is not a valid annotation type.")
             sys.exit(1)
 
         obj.extract(ann_path)

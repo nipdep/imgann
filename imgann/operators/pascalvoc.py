@@ -54,7 +54,7 @@ class PascalVOC(IOperator, ABC):
                                                columns=['x_min', 'y_min', 'x_max', 'y_max', 'class', 'image_id'])
             self.__DFRefiner(obj_df)
         else:
-            logger.error(f"obj_list has not many attrs. : {len(obj_list[0])} or obj_list is empty : {len(obj_list)}")
+            logger.error(f"\n ERROR : obj_list has not many attrs. : {len(obj_list[0])} or obj_list is empty : {len(obj_list)}")
             sys.exit(1)
 
     def archive(self, location: str, data):
@@ -99,13 +99,13 @@ class PascalVOC(IOperator, ABC):
                     if xml_list:
                         return xml_list
                     else:
-                        logger.error("There are no .xml files in the given directory.")
+                        logger.error("\n ERROR : There are no .xml files in the given directory.")
                         sys.exit(1)
                 else:
-                    logger.error("The folder is empty.")
+                    logger.error("\n ERROR : The folder is empty.")
                     sys.exit(1)
         else:
-            logger.error(f"The entered path <{path}> is not valid.")
+            logger.error(f"\n ERROR : The entered path <{path}> is not valid.")
             sys.exit(1)
 
     def __DFRefiner(self, ann_df):

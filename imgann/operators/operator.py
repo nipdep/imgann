@@ -52,7 +52,7 @@ class IOperator(object):
         if type(df) is pd.DataFrame:
             self._dataset = df
         else:
-            logger.error(f"Data type of df : {type(df)} not compatible with database object.")
+            logger.error(f"\n ERROR : Data type of df : {type(df)} not compatible with database object.")
 
     def get_dataset(self):
         """

@@ -44,7 +44,7 @@ class ImgData:
 
         data_df = pd.DataFrame()
         if type(folders) == str:
-            logger.error("you have entered a file directory. Enter Folder directory.")
+            logger.error("\n ERROR : Enter a Folder directory.")
             sys.exit(1)
         else:
             data_list = []
@@ -54,7 +54,7 @@ class ImgData:
                 if files:
                     data_list.extend(ImgData.list_creator(os.path.abspath(dataset_path), folders[0], imgFiles))
                 else:
-                    logger.error("Error: there are no files in given directory!")
+                    logger.error("\n ERROR : there are no files in given directory!")
                     sys.exit(1)
             else:
                 for folder in folders:
@@ -69,7 +69,7 @@ class ImgData:
             if data_list:
                 data_df = pd.DataFrame.from_records(data_list, columns=['name', 'folder', 'path'])
             else:
-                logger.error("there was some error, record tuples are empty.")
+                logger.warning("\nthere was some error, record tuples are empty.")
                 sys.exit(1)
         return cls(root=dataset_path, dataset=data_df)
 
@@ -132,7 +132,7 @@ class ImgData:
                 if len(files) == 1:
                     files = files[0]
         except Exception as error:
-            logger.exception("Error : There are no files in the given directory")
+            logger.exception("\n ERROR : There are no files in the given directory")
             sys.exit(1)
 
         return files
