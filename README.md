@@ -20,11 +20,11 @@ The package is support Python 3.6 and above.
  - To get N number of annotated images randomly.
     you can use coco format, pascalVOC format or csv format as annotation format.
     <annotation type> keywords can be from \['coco', 'csv', 'voc'] \
- `from imgann import Sample ` \
- `Sample.show_samples( <image dataset dir> : string, <annotation file dit> : string, <number of images> : int, <annotation type> : string= 'coco' )` 
+    `from imgann import Sample`\
+    `Sample.show_samples( <image dataset dir> : string, <annotation file dit> : string, <number of images> : int, <annotation type> : string= 'coco' )`
  
-    _example :_ \
-    `Sample.show_samples('./data/test','./annotations/test',5,'voc')` 
+       _example :_ \
+      `Sample.show_samples('./data/test','./annotations/test',5,'voc')` 
     
  - To convert annotation file format.
     - coco to pascal VOC format converting
@@ -70,10 +70,17 @@ The package is support Python 3.6 and above.
         _example :_ \
         `Convertor.voc2coco('../data/train', '../data/annotations/voc_dataset', '../data/annotations/dataset.csv)`
     
-
-        
     
-
- 
- 
- 
+  - To get summary of image dataset\
+  `from imgann import Sample`\
+  `Sample.describe_data( <path to image dataset main folder> )`
+  
+      _example :_\
+      `Sample.describe_data('../data/train')`
+   
+  - To get summary of complete data annotation\
+  `from imgann import Sample`\
+  `Sample.describe_ann( <path to image dataset main folder> , <path to image annotation file/folder> , <image annotation type>['coco', 'yolo', 'csv', 'voc'] )`
+  
+     _example :_\
+     `Sample.describe_ann('../data/train', '../data/annotations/dataset.json', 'coco')`
