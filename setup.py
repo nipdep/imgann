@@ -11,7 +11,7 @@ setup(
 
     name='imgann',
 
-    version='0.7.1',
+    version='0.7.2',
 
     description='image annotation file operation provider.',
 
@@ -50,7 +50,7 @@ setup(
     # py_modules = ["helloworld"],
     packages=['imgann','imgann/operators'],
 
-    python_requires='>=3.5, <4',
+    python_requires='>=3.6, <4',
 
     install_requires=['numpy', 'pandas', 'matplotlib', 'opencv-python'],
 
