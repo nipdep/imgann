@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import logging
+import sys
 
 from .operators.imgdata import ImgData
 from .operators import coco, csv, pascalvoc
@@ -49,7 +50,8 @@ class Sample:
         elif ann_type == 'yolo':
             obj = csv.IOperator(imgdataset.dataset)
         else:
-            assert Exception(f"ERROR: {ann_type} is not a valid annotation type.")
+            logger.error(f"\nERROR: '{ann_type}' is not a valid annotation type.")
+            sys.exit(1)
 
         obj.extract(ann_path)
         obj_list = obj.sample(num_of_samples)
@@ -63,6 +65,11 @@ class Sample:
 
     @staticmethod
     def describe_data(data_path: str):
+        """
+        give a summary of a image dataset
+        :param data_path: absolute or relative path to image dataset main folder
+        :return: log of summary
+        """
         img_dataset = ImgData.extract(data_path)
         data_dict = img_dataset.describe()
         log_st = Sample.descFormat("image data summary", data_dict)
@@ -72,6 +79,13 @@ class Sample:
     @staticmethod
     def describe_ann(data_path: str,
                      ann_path: str, ann_type: str = 'coco'):
+        """
+        give summary of annotated dataset
+        :param data_path: absolute or relative path to image dataset main folder
+        :param ann_path: absolute or relative path to image annotation file or folder
+        :param ann_type: annotation format [coco, voc, csv, yolo]
+        :return: log of summary
+        """
         imgdataset = ImgData.extract(data_path)
         if ann_type == 'coco':
             obj = coco.COCO(imgdataset.dataset)
@@ -82,7 +96,8 @@ class Sample:
         elif ann_type == 'yolo':
             obj = csv.IOperator(imgdataset.dataset)
         else:
-            assert Exception(f"ERROR: {ann_type} is not a valid annotation type.")
+            logger.error(f"ERROR: {ann_type} is not a valid annotation type.")
+            sys.exit(1)
 
         obj.extract(ann_path)
         log_data = obj.describe()
@@ -108,6 +123,9 @@ class Sample:
         for sec in data:
             if type(data[sec]) == str:
                 st = "{0:<{1:d}s} : {2:}\n".format(sec, wd, data[sec])
+                log_data += st
+            elif type(data[sec]) == int:
+                st = "{0:<{1:d}s} : {2:d}\n".format(sec, wd, data[sec])
                 log_data += st
             elif type(data[sec]) == dict:
                 sub_wd = Sample.__getMax(data[sec].keys())
