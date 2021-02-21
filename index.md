@@ -76,6 +76,24 @@ The package is support Python 3.6 and above.
         _example :_ \
         `Convertor.voc2coco('../data/train', '../data/annotations/voc_dataset', '../data/annotations/dataset.csv)`
      ```
+     
+ - To get summary of image dataset\
+  ```
+  `from imgann import Sample`\
+  `Sample.describe_data( <path to image dataset main folder> )`
+  
+      _example :_\
+      `Sample.describe_data('../data/train')`
+  ```    
+   
+ - To get summary of complete data annotation\
+  ```
+  `from imgann import Sample`\
+  `Sample.describe_ann( <path to image dataset main folder> , <path to image annotation file/folder> , <image annotation type>['coco', 'yolo', 'csv', 'voc'] )`
+  
+     _example :_\
+     `Sample.describe_ann('../data/train', '../data/annotations/dataset.json', 'coco')`
+   ```  
 ### Support or Contact
 
 Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
