@@ -23,7 +23,7 @@ The package is support Python 3.6 and above.
     `from imgann import Sample`\
     `Sample.show_samples( <image dataset dir> : string, <annotation file dit> : string, <number of images> : int, <annotation type> : string= 'coco' )`
  
-       _example :_ \
+      _example :_ \
       `Sample.show_samples('./data/test','./annotations/test',5,'voc')` 
     
  - To convert annotation file format.
