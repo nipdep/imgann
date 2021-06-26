@@ -80,13 +80,13 @@ class COCO(IOperator, ABC):
         for line in compact_image_list:
             data["images"].append(self.__list2dict(['file_name', 'height', 'width', 'id'], line))
 
-        obj_ids = self.annotations["obj_id"]
-        image_ids = self.annotations["image_id"]
-        cat_ids = self.annotations["class_id"]
-        xmins = self.annotations["x_min"]
-        ymins = self.annotations["y_min"]
-        xmaxs = self.annotations["x_max"]
-        ymaxs = self.annotations["y_max"]
+        obj_ids = self.annotations["obj_id"].astype('int32')
+        image_ids = self.annotations["image_id"].astype('int32')
+        cat_ids = self.annotations["class_id"].astype('int32')
+        xmins = self.annotations["x_min"].astype('int32')
+        ymins = self.annotations["y_min"].astype('int32')
+        xmaxs = self.annotations["x_max"].astype('int32')
+        ymaxs = self.annotations["y_max"].astype('int32')
         bboxs = []
         areas = []
         for i in range(len(xmaxs)):
@@ -220,7 +220,11 @@ class COCO(IOperator, ABC):
             ret_dict = {}
             for i in range(nt):
                 if i < nv:
-                    ret_dict[tags[i]] = str(values[i])
+                    #ret_dict[tags[i]] = str(values[i])
+                    if isinstance(values[i], int):
+                        ret_dict[tags[i]] = int(values[i])
+                    else:
+                        ret_dict[tags[i]] = str(values[i])
                 else:
                     ret_dict[tags[i]] = padd
             else:

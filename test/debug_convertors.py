@@ -1,7 +1,8 @@
+#%%
 from imgann import convert
 
 cnv = convert.Convertor()
-
+#%%
 # cnv.coco2csv('F:\JetBrain Project Files\Pycharm\security-point-object-detecton-Torch\data\data',
 #                     'F:\JetBrain Project Files\Pycharm\security-point-object-detecton-Torch\data\COCO\dataset.json',
 #                     '../data/data.csv')
@@ -18,10 +19,12 @@ cnv = convert.Convertor()
 #                '../data/data.csv',
 #                '../data/csv2coco.json')
 
-# cnv.voc2coco('F:\JetBrain Project Files\Pycharm\security-point-object-detecton-Torch\data\data',
-#              '../data/voc',
-#              '../data/voc2coco.json')
+cnv.voc2coco('E:/JetBrain Project Files/Pycharm/security-point-object-detecton-Torch/data/data',
+             '../data/voc',
+             '../data/voc2coco.json')
 
 # cnv.voc2csv('F:\JetBrain Project Files\Pycharm\security-point-object-detecton-Torch\data\data',
 #              '../data/voc',
 #              '../data/voc2coco.csv')
+
+# %%
