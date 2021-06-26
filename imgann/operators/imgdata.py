@@ -58,11 +58,11 @@ class ImgData:
                     sys.exit(1)
             else:
                 for folder in folders:
-                    files = ImgData.ext_files(os.path.abspath(dataset_path) + "\\" + folder)
+                    files = ImgData.ext_files(os.path.abspath(dataset_path) + os.sep + folder)
                     imgFiles = ImgData.__filterImg(files)
                     if files:
                         data_list.extend(
-                            ImgData.list_creator(os.path.abspath(dataset_path + "\\" + folder), folder, imgFiles))
+                            ImgData.list_creator(os.path.abspath(dataset_path + os.sep + folder), folder, imgFiles))
                     else:
                         continue
 
@@ -84,7 +84,7 @@ class ImgData:
         """
         tol_list = []
         for file in files:
-            tol_list.append((file, folder, root + "\\" + file))
+            tol_list.append((file, folder, root + os.sep + file))
         return tol_list
 
     @staticmethod
