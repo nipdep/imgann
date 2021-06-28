@@ -17,11 +17,11 @@ cnv = convert.Convertor()
 
 # cnv.csv2coco('F:\JetBrain Project Files\Pycharm\security-point-object-detecton-Torch\data\data',
 #                '../data/data.csv',
-#                '../data/csv2coco.json')
+#                '../data/csv2coco1.json')
 
 # cnv.voc2coco('E:/JetBrain Project Files/Pycharm/security-point-object-detecton-Torch/data/data',
 #              '../data/voc',
-#              '../data/voc2coco.json')
+#              '../data/voc2coco1.json')
 
 # cnv.voc2csv('F:\JetBrain Project Files\Pycharm\security-point-object-detecton-Torch\data\data',
 #              '../data/voc',
