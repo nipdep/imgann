@@ -19,7 +19,8 @@ class Convertor:
     @staticmethod
     def coco2csv(dataset_dir: str,
                  coco_ann_dir: str,
-                 save_dir: str):
+                 save_dir: str,
+                 center: bool = True):
         """ convert coco to csv
 
         :param dataset_dir: relative path current folder, or absolute path to the main folder of the image dataset
@@ -42,7 +43,8 @@ class Convertor:
     @staticmethod
     def coco2voc(dataset_dir: str,
                  coco_ann_dir: str,
-                 save_dir: str):
+                 save_dir: str,
+                 center: bool = True):
         """ convert coco to pascal VOC
 
         :param dataset_dir: relative path current folder, or absolute path to the main folder of the image dataset
@@ -69,7 +71,8 @@ class Convertor:
     @staticmethod
     def csv2coco(dataset_dir: str,
                  csv_ann_dir: str,
-                 save_dir: str):
+                 save_dir: str,
+                 center: bool = True):
         """ convert .csv into coco
 
         :param dataset_dir: relative path current folder, or absolute path to the main folder of the image dataset
@@ -86,7 +89,7 @@ class Convertor:
         coco_obj = coco.COCO(df)
         coco_obj.set_annotations(ann)
         coco_obj.set_classes(cls)
-        data = coco_obj.translate()
+        data = coco_obj.translate(center)
         coco_obj.archive(save_dir, data)
 
     @staticmethod
@@ -119,7 +122,8 @@ class Convertor:
     @staticmethod
     def voc2coco(dataset_dir: str,
                  voc_ann_dir: str,
-                 save_dir: str):
+                 save_dir: str,
+                 center: bool = True):
         """ convert pascal VOC into coco
 
         :param dataset_dir: relative path current folder, or absolute path to the main folder of the image dataset
@@ -136,7 +140,7 @@ class Convertor:
         coco_obj = coco.COCO(df)
         coco_obj.set_annotations(ann)
         coco_obj.set_classes(cls)
-        data = coco_obj.translate()
+        data = coco_obj.translate(center)
         coco_obj.archive(save_dir, data)
 
     @staticmethod

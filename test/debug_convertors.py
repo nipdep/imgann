@@ -19,9 +19,9 @@ cnv = convert.Convertor()
 #                '../data/data.csv',
 #                '../data/csv2coco1.json')
 
-# cnv.voc2coco('E:/JetBrain Project Files/Pycharm/security-point-object-detecton-Torch/data/data',
-#              '../data/voc',
-#              '../data/voc2coco1.json')
+cnv.voc2coco('C:/Users/deela/Downloads/Hard Hat Sample.v5.voc/train',
+             'C:/Users/deela/Downloads/Hard Hat Sample.v5.voc/train_voc',
+             '../data/voc2cocohatt.json')
 
 # cnv.voc2csv('F:\JetBrain Project Files\Pycharm\security-point-object-detecton-Torch\data\data',
 #              '../data/voc',

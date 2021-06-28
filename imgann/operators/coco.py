@@ -25,7 +25,7 @@ class COCO(IOperator, ABC):
         super(COCO, self).__init__(dataset)
         self._dataset = dataset
 
-    def extract(self, path: str):
+    def extract(self, path: str, center):
         """
         all the annotations in the file convert into general dataframe object.
         :param path: string, relative / absolute path
@@ -35,7 +35,7 @@ class COCO(IOperator, ABC):
             with open(path) as fp:
                 ann_data = json.load(fp)
             self.__updateDataset(ann_data["images"])
-            self.__extractAnnotation(ann_data["annotations"])
+            self.__extractAnnotation(ann_data["annotations"], center)
             self.__extractClasses(ann_data["categories"])
         else:
             logger.error(f"\n ERROR : entered path <{path}> is invalid.")
@@ -61,7 +61,7 @@ class COCO(IOperator, ABC):
             logger.error("\n ERROR : There are no such parent directory to file save.")
             sys.exit(1)
 
-    def translate(self):
+    def translate(self, center):
         """ translate common schema into json compatible format.
 
         :return:
@@ -90,7 +90,7 @@ class COCO(IOperator, ABC):
         bboxs = []
         areas = []
         for i in range(len(xmaxs)):
-            bboxs.append(self.__KITTI2normilized(xmins[i], ymins[i], xmaxs[i], ymaxs[i]))
+            bboxs.append(self.__KITTI2normilized(xmins[i], ymins[i], xmaxs[i], ymaxs[i], center))
             areas.append((xmaxs[i] - xmins[i]) * (ymaxs[i] - ymins[i]))
 
         compact_ann_list = zip(obj_ids, image_ids, cat_ids, areas, bboxs)
@@ -106,18 +106,24 @@ class COCO(IOperator, ABC):
 
         return data
 
-    def __normalized2KITTI(self, box):
+    def __normalized2KITTI(self, box, center=True):
         """
 
         :param box: [X, Y, width, height]
         :return: [(xmin, ymin), (xmax, ymax)]
         """
         o_x, o_y, o_width, o_height = box
-        xmin = int(o_x - o_width / 2)
-        ymin = int(o_y - o_height / 2)
-        xmax = int(o_x + o_width / 2)
-        ymax = int(o_y + o_height / 2)
-        return [(xmin, ymin), (xmax, ymax)]
+        if center:  
+            xmin = int(o_x - o_width / 2)
+            ymin = int(o_y - o_height / 2)
+            xmax = int(o_x + o_width / 2)
+            ymax = int(o_y + o_height / 2)
+        else:
+            xmin = o_x
+            ymin = o_y
+            xmax = int(o_x + o_width)
+            ymax = int(o_y + o_height)
+        return [xmin, ymin, xmax, ymax]
 
     def __updateDataset(self, images):
         """
@@ -150,7 +156,7 @@ class COCO(IOperator, ABC):
         super(COCO, self).set_dataset(self._dataset)
         return
 
-    def __extractAnnotation(self, anns):
+    def __extractAnnotation(self, anns, center):
         """
 
         :param anns: annotation attribute in the .json file
@@ -162,12 +168,13 @@ class COCO(IOperator, ABC):
                 obj_id = obj["id"]
                 img_id = obj["image_id"]
                 cls_id = obj["category_id"]
-                min_tup, max_tup = self.__normalized2KITTI(obj["bbox"])
+                x_min, y_min, x_max, y_max = self.__normalized2KITTI(obj["bbox"], center)
+                #logger.info(print(f'obj_id : {obj_id} | image_id : {img_id} | normalized : {obj["bbox"]} > KITTI : {[x_min, y_min, x_max, y_max]}'))
             except Exception as error:
                 logger.exception("\n ERROR : annotation file doesn't in accept the format.")
                 sys.exit(1)
             else:
-                ann_list.append((obj_id, img_id, cls_id, min_tup[0], min_tup[1], max_tup[0], max_tup[1]))
+                ann_list.append((obj_id, img_id, cls_id, x_min, y_min, x_max, y_max))
 
         if ann_list:
             ann_df = pd.DataFrame.from_records(ann_list,
@@ -198,7 +205,7 @@ class COCO(IOperator, ABC):
             sys.exit(1)
             super(COCO, self).set_classes({})
 
-    def __KITTI2normilized(self, xmin, ymin, xmax, ymax):
+    def __KITTI2normilized(self, xmin, ymin, xmax, ymax, center=True):
         """
 
         :param xmin:
@@ -207,10 +214,16 @@ class COCO(IOperator, ABC):
         :param ymax:
         :return: [X, Y, width, height]
         """
-        width = xmax - xmin
-        height = ymax - ymin
-        x0 = (xmax + xmin) / 2
-        y0 = (ymin + ymax) / 2
+        if center:
+            width = xmax - xmin
+            height = ymax - ymin
+            x0 = (xmax + xmin) // 2
+            y0 = (ymin + ymax) // 2
+        else:
+            width = xmax - xmin
+            height = ymax - ymin
+            x0 = xmin
+            y0 = ymin
         return [x0, y0, width, height]
 
     def __list2dict(self, tags, values, padd='0'):
