@@ -223,6 +223,9 @@ class COCO(IOperator, ABC):
                     #ret_dict[tags[i]] = str(values[i])
                     if isinstance(values[i], int):
                         ret_dict[tags[i]] = int(values[i])
+                    elif isinstance(values[i], list):
+                        cl_list = [int(elem) for elem in values[i]]
+                        ret_dict[tags[i]] = cl_list
                     else:
                         ret_dict[tags[i]] = str(values[i])
                 else:

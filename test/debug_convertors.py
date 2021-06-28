@@ -7,8 +7,8 @@ cnv = convert.Convertor()
 #                     'F:\JetBrain Project Files\Pycharm\security-point-object-detecton-Torch\data\COCO\dataset.json',
 #                     '../data/data.csv')
 
-# cnv.coco2voc('F:\JetBrain Project Files\Pycharm\security-point-object-detecton-Torch\data\data',
-#              'F:\JetBrain Project Files\Pycharm\security-point-object-detecton-Torch\data\COCO\dataset.json',
+# cnv.coco2voc('E:/JetBrain Project Files/Pycharm/security-point-object-detecton-Torch/data/data',
+#              '../data/voc2coco.json',
 #              '../data/voc')
 
 # cnv.csv2voc('F:\JetBrain Project Files\Pycharm\security-point-object-detecton-Torch\data\data',
@@ -19,12 +19,14 @@ cnv = convert.Convertor()
 #                '../data/data.csv',
 #                '../data/csv2coco.json')
 
-cnv.voc2coco('E:/JetBrain Project Files/Pycharm/security-point-object-detecton-Torch/data/data',
-             '../data/voc',
-             '../data/voc2coco.json')
+# cnv.voc2coco('E:/JetBrain Project Files/Pycharm/security-point-object-detecton-Torch/data/data',
+#              '../data/voc',
+#              '../data/voc2coco.json')
 
 # cnv.voc2csv('F:\JetBrain Project Files\Pycharm\security-point-object-detecton-Torch\data\data',
 #              '../data/voc',
 #              '../data/voc2coco.csv')
+
+# %%
 
 # %%
