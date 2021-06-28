@@ -90,7 +90,7 @@ class COCO(IOperator, ABC):
         bboxs = []
         areas = []
         for i in range(len(xmaxs)):
-            bboxs.append([xmins[i], ymins[i], xmaxs[i], ymaxs[i]])
+            bboxs.append(self.__KITTI2normilized([xmins[i], ymins[i], xmaxs[i], ymaxs[i]]))
             areas.append((xmaxs[i] - xmins[i]) * (ymaxs[i] - ymins[i]))
 
         compact_ann_list = zip(obj_ids, image_ids, cat_ids, areas, bboxs)
