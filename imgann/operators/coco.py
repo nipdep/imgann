@@ -172,7 +172,7 @@ class COCO(IOperator, ABC):
                 #logger.info(print(f'obj_id : {obj_id} | image_id : {img_id} | normalized : {obj["bbox"]} > KITTI : {[x_min, y_min, x_max, y_max]}'))
             except Exception as error:
                 logger.exception("\n ERROR : annotation file doesn't in accept the format.")
-                sys.exit(1)
+                pass
             else:
                 ann_list.append((obj_id, img_id, cls_id, x_min, y_min, x_max, y_max))
 
