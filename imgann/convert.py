@@ -57,7 +57,7 @@ class Convertor:
 
         imgdataset = ImgData.extract(dataset_dir)
         coco_obj = coco.COCO(imgdataset.dataset)
-        coco_obj.extract(coco_ann_dir)
+        coco_obj.extract(coco_ann_dir, center)
         df = coco_obj.get_dataset()
         ann, cls = coco_obj.get_annotations()
 
