@@ -145,7 +145,7 @@ class COCO(IOperator, ABC):
                     img_height[obj["file_name"]] = obj["height"]
                 except Exception as error:
                     logger.exception("\n ERROR : annotation file doesn't in accept the format.")
-                    sys.exit(1)
+                    pass
         if len(dataset_imgs) > len(ann_imgs):
             self._dataset = self._dataset.loc[self._dataset.loc[:, "name"].isin(ann_imgs), :]
             logger.warning("\nWARNING: all the images had not annotated!")
