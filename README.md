@@ -27,43 +27,46 @@ The package is support Python 3.6 and above.
       `Sample.show_samples('./data/test','./annotations/test',5,'voc')` 
     
  - To convert annotation file format.
-    - coco to pascal VOC format converting
+    - coco to pascal VOC format converting\
     `from imgann import Convertor` \
-    `Convertor.coco2voc( <image dataset dir> : string, <coco annotated .json file dir> : string, <voc formatted .xml file saving folder dir> : string, <center COCO> : bool= True)` 
-    
-        _example :_ \
+    `Convertor.coco2voc( <image dataset dir> : string, <coco annotated .json file dir> : string, <voc formatted .xml file saving folder dir> : string, <center COCO> : bool= True)` \
+ 
+        __note : if `<center COCO> = True` the generating bouding box format is [X_center, Y_center, Width, Heigth] \
+                    `<center COCO> = False` then 'bbox' format of .json file is [X_min, Y_min, Width, Heigth]  < [roboflow](https://app.roboflow.com/) annotated .json files                         saved in this format.__
+                   
+        _example :_  
         `Convertor.coco2voc('../data/train', '../data/annotations/dataset.json', '../data/annotations/voc_dataset')`
     
-    - coco to csv format converting
+    - coco to csv format converting\
     `from imgann import Convertor` \
     `Convertor.coco2csv( <image dataset dir> : string, <coco annotated .json file dir> : string, <voc formatted .csv file dir> : string, <center COCO> : bool= True)` 
-     
+         
         _example :_ \
         `Convertor.coco2csv('../data/train', '../data/annotations/dataset.json', '../data/annotations/dataset.csv')`
     
  
-    - csv to coco format converting
+    - csv to coco format converting\
     `from imgann import Convertor` \
     `Convertor.coco2csv( <image dataset dir> : string, <csv annotated .csv file dir> : string, <coco formatted .json file dir> : string, <center COCO> : bool= True)` 
 
         _example :_ \
         `Convertor.csv2coco('../data/train', '../data/annotations/dataset.csv', '../data/annotations/dataset.json')` 
          
-    - csv to pascal VOC format converting
+    - csv to pascal VOC format converting\
     `from imgann import Convertor` \
     `Convertor.csv2voc( <image dataset dir> : string, <csv annotated .csv file dir> : string, <pascal VOC formatted .xml file saving folder dir> : string)` 
 
         _example :_ \
         `Convertor.coco2csv('../data/train', '../data/annotations/dataset.csv', '../data/annotations/voc_dataset')` 
        
-    - pascal VOC to coco format converting
+    - pascal VOC to coco format converting\
     `from imgann import Convertor` \
     `Convertor.voc2coco( <image dataset dir> : string, <pascal VOC annotated file included folder dir> : string, <coco formatted .json file dir> : string, <center COCO> : bool= True)`
     
         _example :_ \
         `Convertor.voc2coco('../data/train', '../data/annotations/voc_dataset', '../data/annotations/dataset.json)`
         
-     - pascal VOC to csv format converting
+     - pascal VOC to csv format converting\
     `from imgann import Convertor` \
     `Convertor.voc2csv( <image dataset dir> : string, <pascal VOC annotated file included folder dir> : string, <csv formatted .csv file dir> : string)`
     
