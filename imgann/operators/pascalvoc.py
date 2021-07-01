@@ -189,7 +189,7 @@ class PascalVOC(IOperator, ABC):
         :param img_id: [int] image_id in the self.annotations
         :return: all the row that carry given image_id as a list.
         """
-        filtered_list = self.annotations.loc[self.annotations["image_id"] == int(img_id), :].values.tolist()
+        filtered_list = self.annotations.loc[self.annotations["image_id"] == img_id, :].values.tolist()
         return filtered_list
 
     def __xmlFormatter(self, image_data, ann_data):
