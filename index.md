@@ -1,9 +1,10 @@
+![Total Downloads](https://static.pepy.tech/personalized-badge/imgann?period=total&units=international_system&left_color=black&right_color=orange&left_text=Downloads)\
 ![Build Status](https://travis-ci.com/nipdep/img-ann.svg?branch=main)\
 ![Version](https://img.shields.io/pypi/v/imgann)
 
 # img-ann
 
-The __imgann__ is a package for a simplify operations in image annotated files.
+The imgann is a package for a simplify operations in image annotated files.
 such as, annotation type converting \[coco format, pascalVOC format, csv format], image dataset sampling], etc.
 
 
@@ -20,80 +21,70 @@ The package is support Python 3.6 and above.
  - To get N number of annotated images randomly.
     you can use coco format, pascalVOC format or csv format as annotation format.
     <annotation type> keywords can be from \['coco', 'csv', 'voc'] \
-    `from imgann import Sample` \
-    `Sample.show_samples( <image dataset dir> : string, <annotation file dit> : string, <number of images> : int, <annotation type> : string= 'coco' )` 
+    `from imgann import Sample`\
+    `Sample.show_samples( <image dataset dir> : string, <annotation file dit> : string, <number of images> : int, <annotation type> : string= 'coco', <center COCO> : bool= True )`
  
-        _example :_ \
-        `Sample.show_samples('./data/test','./annotations/test',5,'voc')` 
-
- - To convert annotation file format.
-    - coco to pascal VOC format converting
-    ```
-    `from imgann import Convertor` \
-    `Convertor.coco2voc( <image dataset dir> : string, <coco annotated .json file dir> : string, <voc formatted .xml file saving folder dir> : string)` 
+      _example :_ \
+      `Sample.show_samples('./data/test','./annotations/test',5,'voc')` 
     
-        _example :_ \
-        `Convertor.coco2voc('../data/train', '../data/annotations/dataset.json', '../data/annotations/voc_dataset')`
-    ```
-    - coco to csv format converting
-    ```
+ - To convert annotation file format.
+    - coco to pascal VOC format converting\
     `from imgann import Convertor` \
-    `Convertor.coco2csv( <image dataset dir> : string, <coco annotated .json file dir> : string, <voc formatted .csv file dir> : string)` 
-     
+    `Convertor.coco2voc( <image dataset dir> : string, <coco annotated .json file dir> : string, <voc formatted .xml file saving folder dir> : string, <center COCO> : bool= True)` \
+ 
+        __note : if `<center COCO> = True` the generating bouding box format is [X_center, Y_center, Width, Heigth] \
+                    `<center COCO> = False` then 'bbox' format of .json file is [X_min, Y_min, Width, Heigth]  < [roboflow](https://app.roboflow.com/) annotated .json files                         saved in this format.__
+                   
+        _example :_  
+        `Convertor.coco2voc('../data/train', '../data/annotations/dataset.json', '../data/annotations/voc_dataset')`
+    
+    - coco to csv format converting\
+    `from imgann import Convertor` \
+    `Convertor.coco2csv( <image dataset dir> : string, <coco annotated .json file dir> : string, <voc formatted .csv file dir> : string, <center COCO> : bool= True)` 
+         
         _example :_ \
         `Convertor.coco2csv('../data/train', '../data/annotations/dataset.json', '../data/annotations/dataset.csv')`
     
-    ```
-    - csv to coco format converting
-    ```
+ 
+    - csv to coco format converting\
     `from imgann import Convertor` \
-    `Convertor.coco2csv( <image dataset dir> : string, <csv annotated .csv file dir> : string, <coco formatted .json file dir> : string)` 
+    `Convertor.coco2csv( <image dataset dir> : string, <csv annotated .csv file dir> : string, <coco formatted .json file dir> : string, <center COCO> : bool= True)` 
 
         _example :_ \
         `Convertor.csv2coco('../data/train', '../data/annotations/dataset.csv', '../data/annotations/dataset.json')` 
-    ```     
-    - csv to pascal VOC format converting
-    ```
+         
+    - csv to pascal VOC format converting\
     `from imgann import Convertor` \
     `Convertor.csv2voc( <image dataset dir> : string, <csv annotated .csv file dir> : string, <pascal VOC formatted .xml file saving folder dir> : string)` 
 
         _example :_ \
         `Convertor.coco2csv('../data/train', '../data/annotations/dataset.csv', '../data/annotations/voc_dataset')` 
-    ```   
-    - pascal VOC to coco format converting
-    ```
+       
+    - pascal VOC to coco format converting\
     `from imgann import Convertor` \
-    `Convertor.voc2coc( <image dataset dir> : string, <pascal VOC annotated file included folder dir> : string, <coco formatted .json file dir> : string)`
+    `Convertor.voc2coco( <image dataset dir> : string, <pascal VOC annotated file included folder dir> : string, <coco formatted .json file dir> : string, <center COCO> : bool= True)`
     
         _example :_ \
         `Convertor.voc2coco('../data/train', '../data/annotations/voc_dataset', '../data/annotations/dataset.json)`
-     ```   
-     - pascal VOC to csv format converting
-     ```
+        
+     - pascal VOC to csv format converting\
     `from imgann import Convertor` \
     `Convertor.voc2csv( <image dataset dir> : string, <pascal VOC annotated file included folder dir> : string, <csv formatted .csv file dir> : string)`
     
         _example :_ \
         `Convertor.voc2coco('../data/train', '../data/annotations/voc_dataset', '../data/annotations/dataset.csv)`
-     ```
-     
- - To get summary of image dataset\
-  ```
+    
+    
+  - To get summary of image dataset\
   `from imgann import Sample`\
   `Sample.describe_data( <path to image dataset main folder> )`
   
       _example :_\
       `Sample.describe_data('../data/train')`
-  ```    
    
- - To get summary of complete data annotation\
-  ```
+  - To get summary of complete data annotation\
   `from imgann import Sample`\
-  `Sample.describe_ann( <path to image dataset main folder> , <path to image annotation file/folder> , <image annotation type>['coco', 'yolo', 'csv', 'voc'] )`
+  `Sample.describe_ann( <path to image dataset main folder> , <path to image annotation file/folder> , <image annotation type>['coco', 'yolo', 'csv', 'voc'], <center COCO> : bool= True)`
   
      _example :_\
      `Sample.describe_ann('../data/train', '../data/annotations/dataset.json', 'coco')`
-   ```  
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
