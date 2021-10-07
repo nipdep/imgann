@@ -81,7 +81,7 @@ class Sample:
 
     @staticmethod
     def describe_ann(data_path: str,
-                     ann_path: str, ann_type: str = 'coco'):
+                     ann_path: str, ann_type: str = 'coco', center: bool = True):
         """
         give summary of annotated dataset
         :param data_path: absolute or relative path to image dataset main folder
@@ -102,7 +102,10 @@ class Sample:
             logger.error(f"\n ERROR : {ann_type} is not a valid annotation type.")
             sys.exit(1)
 
-        obj.extract(ann_path)
+        if ann_type == 'coco':
+            obj.extract(ann_path, center)
+        else:
+            obj.extract(ann_path)
         log_data = obj.describe()
         log_st = Sample.descFormat("image annotation summary", log_data)
         logger.info("\n"+log_st)
