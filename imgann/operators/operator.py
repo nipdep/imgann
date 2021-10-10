@@ -140,11 +140,14 @@ class IOperator(object):
         desc_dict["class object count"] = class_cnt
         return desc_dict
 
-    def sample(self, numOfSamples):
+    def sample(self, numOfSamples, s=0):
         """
         choose set of images randomly and get bounding boxes of them
         :return: dictionary list of [{"image_id" : "name", "classes" : [], "categories" : []}]
         """
+        ## TODO : add feature to set seed in random sampling
+        if s != 0:
+            random.seed(s)
         numOfrecords, _ = self._dataset.shape
         rnd_numbers = sorted(random.sample(range(0, numOfrecords), numOfSamples))
         sample_df = self._dataset.iloc[rnd_numbers, :]

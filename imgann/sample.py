@@ -30,7 +30,8 @@ class Sample:
                      ann_path: str,
                      num_of_samples: int = 5,
                      ann_type: str = 'coco',
-                     center: bool = True):
+                     center: bool = True,
+                     seed: int = 0):
         """ render set of random images from dataset.
 
         :param data_path: relative path current folder, or absolute path to the main folder of the image dataset
@@ -57,7 +58,7 @@ class Sample:
             obj.extract(ann_path, center)
         else:
             obj.extract(ann_path)
-        obj_list = obj.sample(num_of_samples)
+        obj_list = obj.sample(num_of_samples, seed)
         cat_dict = obj.classes
         for img_obj in obj_list:
             path = img_obj["path"]
