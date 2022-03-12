@@ -20,7 +20,8 @@ class Convertor:
     def coco2csv(dataset_dir: str,
                  coco_ann_dir: str,
                  save_dir: str,
-                 center: bool = True):
+                 center: bool = True,
+                 is_multilabel: bool=False):
         """ convert coco to csv
 
         :param dataset_dir: relative path current folder, or absolute path to the main folder of the image dataset
@@ -37,7 +38,7 @@ class Convertor:
         csv_obj = csv.CSV(df)
         csv_obj.set_annotations(ann)
         csv_obj.set_classes(clas)
-        csv_fomatted = csv_obj.translate()
+        csv_fomatted = csv_obj.translate(is_multilabel)
         csv_obj.archive(save_dir, csv_fomatted)
 
     @staticmethod
@@ -146,7 +147,8 @@ class Convertor:
     @staticmethod
     def voc2csv(dataset_dir: str,
                 voc_ann_dir: str,
-                save_dir: str):
+                save_dir: str,
+                is_multilabel: bool=False):
         """ convert pascal VOC into .csv
 
         :param dataset_dir: relative path current folder, or absolute path to the main folder of the image dataset
@@ -163,5 +165,21 @@ class Convertor:
         csv_obj = csv.CSV(df)
         csv_obj.set_annotations(ann)
         csv_obj.set_classes(cls)
-        csv_fomatted = csv_obj.translate()
+        csv_fomatted = csv_obj.translate(is_multilabel)
         csv_obj.archive(save_dir, csv_fomatted)
+
+    @staticmethod
+    def csv2multilabel(csv_dir: str,
+                       save_dir: str):
+        """Convert Object detection related annotation formatted .csv file into classification related .csv file
+
+        Args:
+            csv_dir (str): relative path current folder, or absolute path to the main folder of the annotated file
+            save_dir (str): .csv file saving location
+
+        Returns:
+            None | save .csv file in <save_dir> location
+        """
+        csv_obj = csv.CSV(csv_dir)
+        df = csv_obj.to_multilabel(csv_dir)
+        csv_obj.archive(save_dir, df)

@@ -3,6 +3,7 @@
 
 import logging
 import sys
+from typing import List
 
 from .operators.imgdata import ImgData
 from .operators import coco, csv, pascalvoc
@@ -31,12 +32,13 @@ class Sample:
                      num_of_samples: int = 5,
                      ann_type: str = 'coco',
                      center: bool = True,
+                     image_shape: List[int] = [150, 150],
                      seed: int = 0):
         """ render set of random images from dataset.
 
         :param data_path: relative path current folder, or absolute path to the main folder of the image dataset
         :param ann_path: relative path current folder, or absolute path to the main folder of the annotated file
-        :param ann_type: one of type from ['coco', 'voc', 'csv', 'yolo']
+        :param ann_type: one of type from ['coco', 'voc', 'csv']
         :param num_of_samples: number of sample images in integer format.
         :return: render sequence of images.
         """
@@ -64,7 +66,7 @@ class Sample:
             path = img_obj["path"]
             obj_data = img_obj["bbox"]
             cat_name = [cat_dict[j] for j in img_obj["classes"]]
-            obj.render(path, obj_data, cat_name)
+            obj.render(path, obj_data, cat_name, image_shape)
         return
 
     @staticmethod

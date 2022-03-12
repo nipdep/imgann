@@ -6,6 +6,7 @@ import logging
 import os
 import sys
 import pandas as pd
+from sklearn.preprocessing import MultiLabelBinarizer
 
 # setup logger
 logging.basicConfig()
@@ -58,7 +59,7 @@ class CSV(IOperator, ABC):
             logger.error("\n ERROR : There are no such parent directory to file save.")
             sys.exit(1)
 
-    def translate(self):
+    def translate(self, is_multilabel: bool=False):
         """ translate common schema into csv compatible format.
 
         :return: pd.DataFrame object with ["filename", "width", "height", "class", "xmin", "ymin", "xmax", "ymax"] columns.
@@ -86,7 +87,12 @@ class CSV(IOperator, ABC):
         else:
             csv_ann_df.rename(columns={"x_min": "xmin", "y_min": "ymin", "x_max": "xmax", "y_max": "ymax"},
                               inplace=True)
-            return csv_ann_df.loc[:, ["filename", "width", "height", "class", "xmin", "ymin", "xmax", "ymax"]]
+            res_df =  csv_ann_df.copy().loc[:, ["filename", "width", "height", "class", "xmin", "ymin", "xmax", "ymax"]]
+
+            if is_multilabel:
+                res_df = self.to_multilabel(res_df)
+            
+            return res_df
 
     def __dfUpdates(self, full_df):
         """add id, image width & height columns to self.dataset
@@ -151,5 +157,16 @@ class CSV(IOperator, ABC):
         :return: merge current self.__dataset with image_df.
         """
         partial_df = image_df.copy()
+        partial_df.drop_duplicates(inplace=True)
         res_df = pd.merge(self._dataset, partial_df, on="name")
         super(CSV, self).set_dataset(res_df)
+
+    def to_multilabel(self, df):
+        if isinstance(df, str):
+            df = pd.read_csv(df)
+    
+        grp_df = df.groupby('filename')['class'].apply(list).reset_index(name='labels')
+        mlb = MultiLabelBinarizer(sparse_output=True)
+        res_df = grp_df.join(pd.DataFrame.sparse.from_spmatrix(mlb.fit_transform(grp_df.pop('labels')),index=grp_df.index,columns=mlb.classes_))
+        res_df.drop_duplicates(inplace=True)
+        return res_df
