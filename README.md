@@ -9,11 +9,29 @@ such as, annotation type converting \[coco format, pascalVOC format, csv format]
 
 
 ## Installation
+1. From PiPy 
 You can install the Real Python Feed Reader from [PyPI](https://pypi.org/project/imgann/):
 ```
 $ pip install imgann
 ```
 The package is support Python 3.6 and above.
+
+2. From github
+clone the codebase from GitHub
+```
+$ git clone https://github.com/nipdep/imgann.git
+```
+build the library
+```
+$ python setup.py bdist_wheel sdist
+```
+install built library
+```
+% for usual usage
+$ pip install -e .
+% for development 
+$ pip install -e .[dev]
+```
  
 ## Usage
 
