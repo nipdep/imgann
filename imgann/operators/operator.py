@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from abc import ABCMeta, abstractmethod
+from typing import List
 import matplotlib.pyplot as plt
 import cv2
 import pandas as pd
@@ -164,7 +165,7 @@ class IOperator(object):
             final_list.append(ordered_dict)
         return final_list
 
-    def render(self, path: str, boxes: list, cls: list, rect_th=1, text_size=0.5, text_th=1):
+    def render(self, path: str, boxes: list, cls: list, shape: List[int], rect_th=1, text_size=0.5, text_th=1):
         """ show annotated image
 
         :param path: directory to image
@@ -177,6 +178,7 @@ class IOperator(object):
         """
         img = cv2.imread(path)
         img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+        px = 1/plt.rcParams['figure.dpi']  # pixel in inches
 
         for i in range(len(boxes)):
             # print(boxes[i][0], boxes[i][1])
@@ -184,7 +186,7 @@ class IOperator(object):
             cv2.putText(img, cls[i],
                         boxes[i][0], cv2.FONT_HERSHEY_COMPLEX,
                         text_size, color=(1, 1, 1), thickness=text_th)
-        plt.figure(figsize=(30, 30))
+        plt.figure(figsize=(shape[0]*px, shape[1]*px))
         plt.imshow(img)
         plt.xticks([])
         plt.yticks([])
