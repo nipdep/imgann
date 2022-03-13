@@ -1,7 +1,7 @@
 Welcome to ImgAnn's documentation!
 ===================================
 
-.. image:: ../static/logo.png
+.. image:: /static/logo.png
    :width: 400
    :atl: ImgAnn
 
