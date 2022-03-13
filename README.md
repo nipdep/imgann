@@ -1,5 +1,5 @@
 <h1 align='center'>
-    <img src='/docs/static/logo.png' />
+    <img src='/docs/source/static/logo.png' />
 </h1>
 <p align='center'>
     Python library for annotation file conversion and preview.
