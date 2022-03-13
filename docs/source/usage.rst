@@ -74,9 +74,10 @@ The library support converting between PascalVOC, COCO and CSV. In General, all 
 .. data:: COCO to PascalVOC
 
 .. note:: 
-   the parameter 'center' defines the bounding box define formats;
-   [X_center, Y_center, Width, Heigth] < if center=True 
-   [X_min, Y_min, Width, Heigth] < if center=False. i.e. `roboflow <https://app.roboflow.com/>`_ annotated .json files saved in this format.
+
+   | the parameter 'center' defines the bounding box define formats;
+   | [X_center, Y_center, Width, Heigth] < if center=True 
+   | [X_min, Y_min, Width, Heigth] < if center=False. i.e. `roboflow <https://app.roboflow.com/>`_ annotated .json files saved in this format.
 
 .. autofunction:: imgann.coco2voc
 
@@ -92,9 +93,10 @@ Code Example:
 .. data:: COCO to CSV
 
 .. note::
-   The library supports two CSV formats as the output.
-   The first format is directly applicable with any object detection work. hence the result contains bounding boxes.
-   In the second format it contains only number of distinct class contains in each image; which format directly supports to multi-class multi-label classification task.
+
+   | The library supports two CSV formats as the output.
+   | The first format is directly applicable with any object detection work. hence the result contains bounding boxes.
+   | In the second format it contains only number of distinct class contains in each image; which format directly supports to multi-class multi-label classification task.
 
 Code Example:
 
@@ -184,7 +186,6 @@ Sample Output:
 
 .. code-block:: HTML
 
-   <div>
    INFO:imgann.sample:
                                  IMAGE DATA SUMMARY                               
    ================================================================================
@@ -195,7 +196,6 @@ Sample Output:
                      > train : 210
                      > valid : 20
    ================================================================================
-   </div>
 
 .. note:: 
    The Folder structure depth only supported down to single folder.
@@ -209,7 +209,6 @@ Sample Output:
 
 .. code-block:: HTML
 
-   <div>
    INFO:imgann.sample:
                                  IMAGE DATA SUMMARY                               
    ================================================================================
@@ -218,7 +217,6 @@ Sample Output:
    folder image counts :
                      > train : 210
    ================================================================================
-   </div>
 
 .. data:: Annotated Dataset
 
@@ -238,7 +236,6 @@ Sample Output:
 
 .. code-block:: HTML
 
-   <div>
    INFO:imgann.sample:
                               IMAGE ANNOTATION SUMMARY                            
    ================================================================================
@@ -255,7 +252,6 @@ Sample Output:
                            > helmet : 553
                            > person : 21
    ================================================================================
-   </div>
 
 
 

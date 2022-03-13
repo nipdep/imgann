@@ -32,7 +32,7 @@ class Sample:
                      num_of_samples: int = 5,
                      ann_type: str = 'coco',
                      center: bool = True,
-                     image_shape: List[int] = [150, 150],
+                     image_shape: List[int] = [300, 300],
                      seed: int = 0):
         """ render set of random images from dataset.
 
