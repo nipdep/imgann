@@ -15,6 +15,7 @@ To use imgann, you could install using `PyPi <https://pypi.org/project/imgann/>`
 Another option is to directly build the library from codebase :
 
 .. code-block:: console
+
    % clone codebase
    $ git clone https://github.com/nipdep/imgann.git
    % for usual usage
@@ -70,7 +71,7 @@ Convert Annotation Format
 
 The library support converting between PascalVOC, COCO and CSV. In General, all the functions take parameter as image dataset directory and annotation file directory.
 
-**COCO to PascalVOC**
+.. data:: COCO to PascalVOC
 
 .. note:: 
    the parameter 'center' defines the bounding box define formats;
@@ -87,4 +88,174 @@ Code Example:
    Convertor.coco2voc(dataset_dir='../data/Hard Hat Sample.v5i.coco/test',
                       coco_ann_dir='../data/Hard Hat Sample.v5i.coco/test/_annotations.coco.json',
                       save_dir='../data/coco2voc)
+
+.. data:: COCO to CSV
+
+.. note::
+   The library supports two CSV formats as the output.
+   The first format is directly applicable with any object detection work. hence the result contains bounding boxes.
+   In the second format it contains only number of distinct class contains in each image; which format directly supports to multi-class multi-label classification task.
+
+Code Example:
+
+.. code-block:: python
+
+   from imgann import Convertor
+   Convertor.coco2csv(dataset_dir='../data/Hard Hat Sample.v5i.coco/test',
+                      coco_ann_dir='../data/Hard Hat Sample.v5i.coco/test/_annotations.coco.json',
+                      save_dir='../data/coco2csv.csv')
+
+.. data:: PascalVOC to COCO
+
+Code Example:
+
+.. code-block:: python
+
+   from imgann import Convertor
+   Convertor.voc2coco(dataset_dir='../data/Hard Hat Sample.v5i.coco/test',
+                      voc_ann_dir='../data/coco2voc',
+                      save_dir='../data/voc2coco.json')
+
+.. data:: PascalVOC to CSV
+
+Code Example:
+
+.. code-block:: python
+
+   from imgann import Convertor
+   Convertor.voc2csv(dataset_dir='../data/Hard Hat Sample.v5.voc/test',
+                     voc_ann_dir='../data/Hard Hat Sample.v5.voc/test',
+                     save_dir='../data/voc2csv.csv')
+
+.. data:: CSV to COCO
+
+Code Example:
+
+.. code-block:: python
+
+   from imgann import Convertor
+   Convertor.csv2coco(dataset_dir='../data/Hard Hat Sample.v5i.tensorflow/test/',
+                      csv_ann_dir='../data/Hard Hat Sample.v5i.tensorflow/test/_annotations.csv',
+                      save_dir='../data/csv2coco.json')
+
+.. data:: CSV to PascalVOC
+
+Code Example:
+
+.. code-block:: python
+
+   from imgann import Convertor
+   Convertor.csv2voc(dataset_dir='../data/Hard Hat Sample.v5i.tensorflow/test',
+                     csv_ann_dir='../data/Hard Hat Sample.v5i.tensorflow/test/_annotations.csv',
+                     save_dir='../data/csv2voc')
+
+.. data:: CSV Object Detection to Multi-class Multi-label
+
+Code Example:
+
+.. code-block:: python
+
+   from imgann import Convertor
+   Convertor.csv2multilabel(csv_dir='../data/Hard Hat Sample.v5i.tensorflow/test/_annotations.csv',
+                            save_dir='../data/csv2m.csv')
+
+.. note::
+   For more info on functional parameters, acceptable input formats and output format refer API pages.
+
+Describe Image Dataset
+----------------------
+
+Get summary of stats of the input datasets and annotation is crucial, and can be considered as the EDA in object detection project.
+
+The library supports summary generation under two levels.
+
+.. data:: Image Dataset Alone
+
+This function analyse only images under the dataset. **Dataset** could combination set of folders.
+
+Code Example:
+
+.. code-block:: python
+
+   from imgann import Sample
+   Sample.describe_data('../data/Hard Hat Sample.v5i.coco')
+
+Sample Output:
+
+.. code-block:: HTML
+
+   <div>
+   INFO:imgann.sample:
+                                 IMAGE DATA SUMMARY                               
+   ================================================================================
+   number of images    : 240
+   number of folders   : 3
+   folder image counts :
+                     > test  : 10
+                     > train : 210
+                     > valid : 20
+   ================================================================================
+   </div>
+
+.. note:: 
+   The Folder structure depth only supported down to single folder.
+
+.. code-block:: python
+
+   from imgann import Sample
+   Sample.describe_data('../data/Hard Hat Sample.v5i.coco/train')
+
+Sample Output:
+
+.. code-block:: HTML
+
+   <div>
+   INFO:imgann.sample:
+                                 IMAGE DATA SUMMARY                               
+   ================================================================================
+   number of images    : 210
+   number of folders   : 1
+   folder image counts :
+                     > train : 210
+   ================================================================================
+   </div>
+
+.. data:: Annotated Dataset
+
+This function analyse the annotation stats in addition to the image stats generates in the above function.
+
+.. note::
+   In the function also, supports the two annotation formats under COCO as stated under **PascalVOC to COCO** function.
+
+.. code-block:: python
+
+   from imgann import Sample
+   Sample.describe_ann(data_path='../data/Hard Hat Sample.v5i.coco/train', 
+                       ann_path='../data/Hard Hat Sample.v5i.coco/train/_annotations.coco.json', 
+                       ann_type='coco')
+
+Sample Output:
+
+.. code-block:: HTML
+
+   <div>
+   INFO:imgann.sample:
+                              IMAGE ANNOTATION SUMMARY                            
+   ================================================================================
+   number of images         : 210
+   folder image counts      :
+                           > train : 210
+   number of image sizes    : 1
+   image_size               : 416 X 416
+   number of object classes : 4
+   object classes           : Workers | head | helmet | person
+   number of objects        : 760
+   class object count       :
+                           > head   : 186
+                           > helmet : 553
+                           > person : 21
+   ================================================================================
+   </div>
+
+
 
