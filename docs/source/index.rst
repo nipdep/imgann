@@ -2,7 +2,7 @@ Welcome to ImgAnn's documentation!
 ===================================
 
 .. image:: ../static/logo.png
-   :width: 400
+   :width: 100
 
 
 **ImgAnn** is a Python library for converting between popular image annotation formats and preview annotated dataset.

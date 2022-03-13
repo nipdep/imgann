@@ -6,49 +6,85 @@ Usage
 Installation
 ============
 
-To use schnL, first install it using pip:
+To use imgann, you could install using `PyPi <https://pypi.org/project/imgann/>`_ :
 
 .. code-block:: console
 
    (.venv) $ pip install imgann
 
+Another option is to directly build the library from codebase :
+
+.. code-block:: console
+   % clone codebase
+   $ git clone https://github.com/nipdep/imgann.git
+   % for usual usage
+   $ pip install -e .
+   % for development 
+   $ pip install -e .[dev]
+
+
+
 Functionalities
 ===============
 
-Dataset Download & extract
+Annotated Dataset Preview
 --------------------------
 
-To download SVHN dataset [train, test or extra] from `the original svhn dataset <http://ufldl.stanford.edu/housenumbers>`_
-and extract the downloaded .tar.gz file. you can use ``svhnl.download()`` function:
+It's import to make sure downloaded dataset image annotations are in proper / precise manner, And after all it's good to check the resulting annotations after custom annotation type conversion or 
+annotation conversion provided by this library.
 
-.. autofunction:: svhnl.download
+The following view function work in both *python* and *IPython* kernels. but ew encourage you to use in interactive python environment such as Jupyter notebooks.
+Also, dataset and annotation file paths could be in either relative or absolute formats. This function generates set or pseudo random images with their
+bounding + label on. Also, you could define resulting image shape and the seed to get consistent image outputs.
 
-Code Example:
+.. note::
+   The `image-shape` does not change the aspect ratio of the images in the dataset at any point.
+   More explicitly, For example let say the images shape of original dataset is (246, 246); means the aspect ration of 1:1.
+   So, even you have input image_shape=(400, 500) the resulting image in the shape (400,400) to preserve original aspect ratio. 
 
-.. code-block:: python
-
-   >>>> import svhnl
-   >>>> train_dt_filename = svhnl.download(extract=False)
-   './data/train.tar.gz'
-   >>>> test_dt_folder_path = svhnl.download(dataset_type='test', save_path='../dataset/svhn', extract=True, force=False, del_zip=False)
-   '../dataset/svhn/test'
-
-For further instruction follow to API page; :ref:`download`
-
-Convert Annotation file into JSON
----------------------------------
-
-To read the .mat annotation file provided with `the original svhn dataset <http://ufldl.stanford.edu/housenumbers>`_
-and generate more flexible and light-weight .json annotation file.
-
-.. autofunction:: svhnl.ann_to_json
+.. autofunction:: imgann.show_samples
 
 Code Example:
 
 .. code-block:: python
 
-   import svhnl
-   svhnl.ann_to_json(file_path='./train/digitStruct.mat', save_path='./svhn_ann.json', bbox_type='normalize')
+   from imgann import Sample
+   Sample.show_samples(data_path='../data/Hard Hat Sample.v5.voc/test', 
+                       ann_path='../data/Hard Hat Sample.v5.voc/test', 
+                       num_of_samples=5, 
+                       ann_type='voc', 
+                       seed=123, 
+                       image_shape=[500, 500])
 
-The function supports both Normalilzed {top, left, width, height} format and KITTI {xmin, ymin, xmax, ymax} format.
-For further instruction follow to API page; :ref:`ann_to_json`
+*Sample Output*
+
+.. image:: ../static/show_sample1.png
+   :width: 500
+
+
+.. note::
+   For further instruction follow to API page.
+
+Convert Annotation Format
+-------------------------
+
+The library support converting between PascalVOC, COCO and CSV. In General, all the functions take parameter as image dataset directory and annotation file directory.
+
+**COCO to PascalVOC**
+
+.. note:: 
+   the parameter 'center' defines the bounding box define formats;
+   [X_center, Y_center, Width, Heigth] < if center=True 
+   [X_min, Y_min, Width, Heigth] < if center=False. i.e. `roboflow <https://app.roboflow.com/>`_ annotated .json files saved in this format.
+
+.. autofunction:: imgann.coco2voc
+
+Code Example:
+
+.. code-block:: python
+
+   from imgann import Convertor
+   Convertor.coco2voc(dataset_dir='../data/Hard Hat Sample.v5i.coco/test',
+                      coco_ann_dir='../data/Hard Hat Sample.v5i.coco/test/_annotations.coco.json',
+                      save_dir='../data/coco2voc)
+
