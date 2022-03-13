@@ -396,7 +396,6 @@ Supporting Annotation File Examples
    :header-rows: 1
 
    * - filename
-     - width
      - head
      - helmet
    * - 1.png

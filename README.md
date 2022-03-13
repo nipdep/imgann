@@ -15,7 +15,7 @@ You can install the Real Python Feed Reader from [PyPI](https://pypi.org/project
 ```
 $ pip install imgann
 ```
-The package is support Python 3.6 and above.
+The package is support Python 3.7 and above.
 
 2. From github
 clone the codebase from GitHub
@@ -36,7 +36,8 @@ $ pip install -e .[dev]
  
 ## Usage
 
- 
+ For functional usages in detail refer the [documentation](https://imgann.readthedocs.io/en/latest/index.html)
+
  - To get N number of annotated images randomly.
     you can use coco format, pascalVOC format or csv format as annotation format.
     <annotation type> keywords can be from \['coco', 'csv', 'voc'] \
@@ -98,7 +99,7 @@ $ pip install -e .[dev]
         Convertor.voc2coco('../data/train', '../data/annotations/voc_dataset', '../data/annotations/dataset.json)
         ```
         
-     - pascal VOC to csv format converting\
+    - pascal VOC to csv format converting\
     `from imgann import Convertor` \
     `Convertor.voc2csv( <image dataset dir> : string, <pascal VOC annotated file included folder dir> : string, <csv formatted .csv file dir> : string)`
     
@@ -107,6 +108,14 @@ $ pip install -e .[dev]
         Convertor.voc2coco('../data/train', '../data/annotations/voc_dataset', '../data/annotations/dataset.csv)
         ```
     
+    - pascal VOC to csv format converting\
+    `from imgann import Convertor` \
+    `Convertor.csv2multilabel( <csv dataset dir> : string, <save dir> : string)`
+    
+        _example :_ 
+        ```
+        Convertor.csv2multilabel('../data/train/annotation.csv', '../data/annotations/dataset.csv)
+        ```
     
   - To get summary of image dataset\
   `from imgann import Sample`\
@@ -127,4 +136,4 @@ $ pip install -e .[dev]
      ```
 * * *
 ImgAnn \
-Copyright &copy; 2020-2021 @nipdep
+Copyright &copy; 2022 @nipdep

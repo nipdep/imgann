@@ -169,7 +169,13 @@ class Convertor:
         csv_obj.archive(save_dir, csv_fomatted)
 
     @staticmethod
-    def csv2multilabel(csv_dir: str,
+    def - pascal VOC to csv format converting\
+    `from imgann import Convertor` \
+    `Convertor.voc2csv( <image dataset dir> : string, <pascal VOC annotated file included folder dir> : string, <csv formatted .csv file dir> : string)`
+    
+        _example :_ 
+        ```
+        Conve(csv_dir: str,
                        save_dir: str):
         """Convert Object detection related annotation formatted .csv file into classification related .csv file
 
