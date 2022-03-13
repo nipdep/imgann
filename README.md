@@ -5,9 +5,9 @@
     Python library for annotation file conversion and preview.
 </p>
 
-![Total Downloads](https://static.pepy.tech/personalized-badge/imgann?period=total&units=international_system&left_color=black&right_color=orange&left_text=Downloads)\
-![Build Status](https://travis-ci.com/nipdep/img-ann.svg?branch=main)\
-![Version](https://img.shields.io/pypi/v/imgann)
+![Total Downloads](https://static.pepy.tech/personalized-badge/imgann?period=total&units=international_system&left_color=black&right_color=orange&left_text=Downloads) &nbsp; &nbsp;
+![Build Status](https://travis-ci.com/nipdep/img-ann.svg?branch=main) &nbsp; &nbsp;
+![Version](https://img.shields.io/pypi/v/imgann) 
 
 ## Installation
 1. From PiPy 
