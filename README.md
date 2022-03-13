@@ -1,12 +1,13 @@
+<h1 align='center'>
+    <img src='/docs/static/logo.png' />
+</h1>
+<p align='center'>
+    Python library for annotation file conversion and preview.
+</p>
+
 ![Total Downloads](https://static.pepy.tech/personalized-badge/imgann?period=total&units=international_system&left_color=black&right_color=orange&left_text=Downloads)\
 ![Build Status](https://travis-ci.com/nipdep/img-ann.svg?branch=main)\
 ![Version](https://img.shields.io/pypi/v/imgann)
-
-# img-ann
-
-The imgann is a package for a simplify operations in image annotated files.
-such as, annotation type converting \[coco format, pascalVOC format, csv format], image dataset sampling], etc.
-
 
 ## Installation
 1. From PiPy 
