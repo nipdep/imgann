@@ -1,9 +1,9 @@
 Welcome to ImgAnn's documentation!
 ===================================
 
-.. image:: /static/logo.png
+.. image:: ../static/logo.png
    :width: 400
-   :atl: ImgAnn
+
 
 **ImgAnn** is a Python library for converting between popular image annotation formats and preview annotated dataset.
 Mainly, because of converting annotation file from one format to another is a tedious task to handle and also crucial as all other steps in the deep learning project.
