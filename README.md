@@ -33,6 +33,9 @@ $ pip install -e .
 % for development 
 $ pip install -e .[dev]
 ```
+
+## Official Documentation
+ReadTheDocs link : https://imgann.readthedocs.io/en/latest/index.html
  
 ## Usage
 
@@ -108,7 +111,7 @@ $ pip install -e .[dev]
         Convertor.voc2coco('../data/train', '../data/annotations/voc_dataset', '../data/annotations/dataset.csv)
         ```
     
-    - pascal VOC to csv format converting\
+    - csv to TF multi-label converting\
     `from imgann import Convertor` \
     `Convertor.csv2multilabel( <csv dataset dir> : string, <save dir> : string)`
     
@@ -116,7 +119,7 @@ $ pip install -e .[dev]
         ```
         Convertor.csv2multilabel('../data/train/annotation.csv', '../data/annotations/dataset.csv)
         ```
-    
+
   - To get summary of image dataset\
   `from imgann import Sample`\
   `Sample.describe_data( <path to image dataset main folder> )`

@@ -21,6 +21,14 @@ logger.setLevel(logging.INFO)
     "path: : str], ..
 }
 """
+""" render set of random images from dataset.
+
+        :param data_path: relative path current folder, or absolute path to the main folder of the image dataset
+        :param ann_path: relative path current folder, or absolute path to the main folder of the annotated file
+        :param ann_type: one of type from ['coco', 'voc', 'csv']
+        :param num_of_samples: number of sample images in integer format.
+        :return: render sequence of images.
+        """
 
 
 class Sample:
@@ -34,13 +42,16 @@ class Sample:
                      center: bool = True,
                      image_shape: List[int] = [300, 300],
                      seed: int = 0):
-        """ render set of random images from dataset.
+        """render a set of random images from dataset with annotations.
 
-        :param data_path: relative path current folder, or absolute path to the main folder of the image dataset
-        :param ann_path: relative path current folder, or absolute path to the main folder of the annotated file
-        :param ann_type: one of type from ['coco', 'voc', 'csv']
-        :param num_of_samples: number of sample images in integer format.
-        :return: render sequence of images.
+        Args:
+            data_path (str): relative path current folder, or absolute path to the main folder of the image dataset
+            ann_path (str): relative path current folder, or absolute path to the main folder of the annotated file
+            num_of_samples (int, optional): number of samples to show. Defaults to 5.
+            ann_type (str, optional): annotation type of the file in 'ann_path', from one of type from ['coco', 'voc', 'csv']. Defaults to 'coco'.
+            center (bool, optional): wether in KITTI bbox contains (X_center, Y_center, ...) or (X_min, Y_min, ...). Defaults to True.
+            image_shape (List[int], optional): output image size in pixels. Defaults to [300, 300].
+            seed (int, optional): set random-state for consintent outputs, else function given different set at each run. Defaults to 0.
         """
 
         global obj
@@ -54,7 +65,8 @@ class Sample:
         elif ann_type == 'yolo':
             obj = csv.IOperator(imgdataset.dataset)
         else:
-            logger.error(f"\nERROR: '{ann_type}' is not a valid annotation type.")
+            logger.error(
+                f"\nERROR: '{ann_type}' is not a valid annotation type.")
             sys.exit(1)
         if ann_type == 'coco':
             obj.extract(ann_path, center)
@@ -71,10 +83,10 @@ class Sample:
 
     @staticmethod
     def describe_data(data_path: str):
-        """
-        give a summary of a image dataset
-        :param data_path: absolute or relative path to image dataset main folder
-        :return: log of summary
+        """give a summary of a image dataset
+
+        Args:
+            data_path (str): absolute or relative path to image dataset main folder
         """
         img_dataset = ImgData.extract(data_path)
         data_dict = img_dataset.describe()
@@ -85,12 +97,13 @@ class Sample:
     @staticmethod
     def describe_ann(data_path: str,
                      ann_path: str, ann_type: str = 'coco', center: bool = True):
-        """
-        give summary of annotated dataset
-        :param data_path: absolute or relative path to image dataset main folder
-        :param ann_path: absolute or relative path to image annotation file or folder
-        :param ann_type: annotation format [coco, voc, csv, yolo]
-        :return: log of summary
+        """give summary of annotated dataset
+
+        Args:
+            data_path (str): absolute or relative path to image dataset main folder
+            ann_path (str): absolute or relative path to image annotation file or folder
+            ann_type (str, optional): annotation type of the file in 'ann_path', from one of type from ['coco', 'voc', 'csv']. Defaults to 'coco'.
+            center (bool, optional): wether in KITTI bbox contains (X_center, Y_center, ...) or (X_min, Y_min, ...). Defaults to True.
         """
         imgdataset = ImgData.extract(data_path)
         if ann_type == 'coco':
@@ -102,7 +115,8 @@ class Sample:
         elif ann_type == 'yolo':
             obj = csv.IOperator(imgdataset.dataset)
         else:
-            logger.error(f"\n ERROR : {ann_type} is not a valid annotation type.")
+            logger.error(
+                f"\n ERROR : {ann_type} is not a valid annotation type.")
             sys.exit(1)
 
         if ann_type == 'coco':
@@ -116,12 +130,14 @@ class Sample:
 
     @staticmethod
     def descFormat(header, data):
-        """
-        give formatted string for data
+        """give formatted string for data
 
-        :param header: header name of the summary
-        :param data: dictionary of data {field : value}
-        :return: formatted string of all data.
+        Args:
+            header (_type_): header name of the summary
+            data (_type_): dictionary of data {field : value}
+
+        Returns:
+            _type_: formatted string of all data.
         """
         log_string = ""
         log_header = "{0:^80s}\n{1:s}\n".format(header.upper(), '=' * 80)
@@ -141,7 +157,8 @@ class Sample:
                 sub_topic = "{0:<{1:d}s} :\n".format(sec, wd)
                 log_data += sub_topic
                 for sub_elem in data[sec]:
-                    sub_data = "{0:<{1:d}s} > {2:<{3:d}} : {4:}\n".format(" ", wd, sub_elem, sub_wd, data[sec][sub_elem])
+                    sub_data = "{0:<{1:d}s} > {2:<{3:d}} : {4:}\n".format(
+                        " ", wd, sub_elem, sub_wd, data[sec][sub_elem])
                     log_data += sub_data
         log_data += "{0:s}\n".format("="*80)
         log_string += log_data
@@ -156,4 +173,3 @@ class Sample:
         """
         elem = max(ls, key=len)
         return len(elem)
-

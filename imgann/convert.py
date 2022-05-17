@@ -21,13 +21,15 @@ class Convertor:
                  coco_ann_dir: str,
                  save_dir: str,
                  center: bool = True,
-                 is_multilabel: bool=False):
-        """ convert coco to csv
+                 is_multilabel: bool = False):
+        """convert coco to csv format
 
-        :param dataset_dir: relative path current folder, or absolute path to the main folder of the image dataset
-        :param coco_ann_dir: relative path current folder, or absolute path to the main folder of the annotated file
-        :param save_dir: .csv file saving location
-        :return: None
+        Args:
+            dataset_dir (str): relative path current folder, or absolute path to the main folder of the image dataset
+            coco_ann_dir (str):  relative path current folder, or absolute path to the main folder of the annotated file
+            save_dir (str): .csv file saving location
+            center (bool, optional): wether in KITTI bbox contains (X_center, Y_center, ...) or (X_min, Y_min, ...). Defaults to True.
+            is_multilabel (bool, optional): directly convert to TF multi-label One-Hot encoded version without bbox data. Defaults to False.
         """
         imgdataset = ImgData.extract(dataset_dir)
         coco_obj = coco.COCO(imgdataset.dataset)
@@ -46,12 +48,13 @@ class Convertor:
                  coco_ann_dir: str,
                  save_dir: str,
                  center: bool = True):
-        """ convert coco to pascal VOC
+        """convert coco to pascal VOC format
 
-        :param dataset_dir: relative path current folder, or absolute path to the main folder of the image dataset
-        :param coco_ann_dir: relative path current folder, or absolute path to the main folder of the annotated file
-        :param save_dir: .csv file saving location
-        :return: None
+        Args:
+            dataset_dir (str): relative path current folder, or absolute path to the main folder of the image dataset
+            coco_ann_dir (str): relative path current folder, or absolute path to the main folder of the annotated file
+            save_dir (str):  .csv file saving location
+            center (bool, optional): wether in KITTI bbox contains (X_center, Y_center, ...) or (X_min, Y_min, ...). Defaults to True.
         """
         if not os.path.exists(save_dir):
             os.makedirs(save_dir)
@@ -74,12 +77,13 @@ class Convertor:
                  csv_ann_dir: str,
                  save_dir: str,
                  center: bool = True):
-        """ convert .csv into coco
+        """convert .csv into coco format
 
-        :param dataset_dir: relative path current folder, or absolute path to the main folder of the image dataset
-        :param csv_ann_dir: relative path current folder, or absolute path to the main folder of the annotated file
-        :param save_dir: .csv file saving location
-        :return: None
+        Args:
+            dataset_dir (str): relative path current folder, or absolute path to the main folder of the image dataset
+            csv_ann_dir (str): relative path current folder, or absolute path to the main folder of the annotated file
+            save_dir (str): .csv file saving location
+            center (bool, optional): wether in KITTI bbox contains (X_center, Y_center, ...) or (X_min, Y_min, ...). Defaults to True.
         """
         imagedataset = ImgData.extract(dataset_dir)
         csv_obj = csv.CSV(imagedataset.dataset)
@@ -97,12 +101,12 @@ class Convertor:
     def csv2voc(dataset_dir: str,
                 csv_ann_dir: str,
                 save_dir: str):
-        """ convert .csv into pascal VOC
+        """convert .csv into pascal VOC format
 
-        :param dataset_dir: relative path current folder, or absolute path to the main folder of the image dataset
-        :param csv_ann_dir: relative path current folder, or absolute path to the main folder of the annotated file
-        :param save_dir: .csv file saving location
-        :return: None
+        Args:
+            dataset_dir (str): relative path current folder, or absolute path to the main folder of the image dataset
+            csv_ann_dir (str): relative path current folder, or absolute path to the main folder of the annotated file
+            save_dir (str):  .csv file saving location
         """
         if not os.path.exists(save_dir):
             os.makedirs(save_dir)
@@ -125,12 +129,13 @@ class Convertor:
                  voc_ann_dir: str,
                  save_dir: str,
                  center: bool = True):
-        """ convert pascal VOC into coco
+        """convert Pascal-VOC to COCO format
 
-        :param dataset_dir: relative path current folder, or absolute path to the main folder of the image dataset
-        :param voc_ann_dir: relative path current folder, or absolute path to the main folder of the annotated file
-        :param save_dir: .csv file saving location
-        :return: None
+        Args:
+            dataset_dir (str): relative path current folder, or absolute path to the main folder of the image dataset
+            csv_ann_dir (str): relative path current folder, or absolute path to the main folder of the annotated file
+            save_dir (str):  .csv file saving location,
+            center (bool, optional): wether in KITTI bbox contains (X_center, Y_center, ...) or (X_min, Y_min, ...). Defaults to True.
         """
         imagedataset = ImgData.extract(dataset_dir)
         voc_obj = pascalvoc.PascalVOC(imagedataset.dataset)
@@ -148,13 +153,14 @@ class Convertor:
     def voc2csv(dataset_dir: str,
                 voc_ann_dir: str,
                 save_dir: str,
-                is_multilabel: bool=False):
-        """ convert pascal VOC into .csv
+                is_multilabel: bool = False):
+        """convert Pascal-VOC to csv format
 
-        :param dataset_dir: relative path current folder, or absolute path to the main folder of the image dataset
-        :param voc_ann_dir: relative path current folder, or absolute path to the main folder of the annotated file
-        :param save_dir: .csv file saving location
-        :return: None
+        Args:
+            dataset_dir (str): relative path current folder, or absolute path to the main folder of the image dataset
+            csv_ann_dir (str): relative path current folder, or absolute path to the main folder of the annotated file
+            save_dir (str):  .csv file saving location,
+            is_multilabel (bool, optional): directly convert to TF multi-label One-Hot encoded version without bbox data. Defaults to False.
         """
         imagedataset = ImgData.extract(dataset_dir)
         voc_obj = pascalvoc.PascalVOC(imagedataset.dataset)
@@ -169,13 +175,7 @@ class Convertor:
         csv_obj.archive(save_dir, csv_fomatted)
 
     @staticmethod
-    def - pascal VOC to csv format converting\
-    `from imgann import Convertor` \
-    `Convertor.voc2csv( <image dataset dir> : string, <pascal VOC annotated file included folder dir> : string, <csv formatted .csv file dir> : string)`
-    
-        _example :_ 
-        ```
-        Conve(csv_dir: str,
+    def csv2multilabel(csv_dir: str,
                        save_dir: str):
         """Convert Object detection related annotation formatted .csv file into classification related .csv file
 
