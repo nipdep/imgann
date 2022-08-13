@@ -6,7 +6,7 @@ import sys
 from typing import List
 
 from .operators.imgdata import ImgData
-from .operators import coco, csv, pascalvoc
+from .operators import coco, csv, pascalvoc, yolo
 
 # setup logger
 logger = logging.getLogger(__name__)
@@ -63,15 +63,17 @@ class Sample:
         elif ann_type == 'csv':
             obj = csv.CSV(imgdataset.dataset)
         elif ann_type == 'yolo':
-            obj = csv.IOperator(imgdataset.dataset)
+            obj = yolo.Yolo(imgdataset.dataset)
         else:
             logger.error(
                 f"\nERROR: '{ann_type}' is not a valid annotation type.")
             sys.exit(1)
+
         if ann_type == 'coco':
             obj.extract(ann_path, center)
         else:
             obj.extract(ann_path)
+        
         obj_list = obj.sample(num_of_samples, seed)
         cat_dict = obj.classes
         for img_obj in obj_list:
@@ -113,7 +115,7 @@ class Sample:
         elif ann_type == 'csv':
             obj = csv.CSV(imgdataset.dataset)
         elif ann_type == 'yolo':
-            obj = csv.IOperator(imgdataset.dataset)
+            obj = yolo.Yolo(imgdataset.dataset)
         else:
             logger.error(
                 f"\n ERROR : {ann_type} is not a valid annotation type.")

@@ -165,12 +165,12 @@ class IOperator(object):
             final_list.append(ordered_dict)
         return final_list
 
-    def render(self, path: str, boxes: list, cls: list, shape: List[int], rect_th=1, text_size=0.5, text_th=1):
+    def render(self, path: str, boxes: list, cl: list, shape: List[int], rect_th=1, text_size=0.5, text_th=1):
         """ show annotated image
 
         :param path: directory to image
         :param boxes: all the bounding boxes in [[(),()], ...]
-        :param cls: list of class names
+        :param cl: list of class names
         :param rect_th: thickness of he box :int
         :param text_size: font size
         :param text_th: thickness of the text :int
@@ -183,7 +183,7 @@ class IOperator(object):
         for i in range(len(boxes)):
             # print(boxes[i][0], boxes[i][1])
             cv2.rectangle(img, boxes[i][0], boxes[i][1], color=(14, 14, 14), thickness=rect_th)
-            cv2.putText(img, cls[i],
+            cv2.putText(img, str(cl[i]),
                         boxes[i][0], cv2.FONT_HERSHEY_COMPLEX,
                         text_size, color=(1, 1, 1), thickness=text_th)
         plt.figure(figsize=(shape[0]*px, shape[1]*px))

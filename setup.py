@@ -12,7 +12,7 @@ setup(
     name='imgann',
 
 
-    version='0.7.13',
+    version='0.8.0',
 
 
     description='Image annotation file operation provider. [Documentation](https://imgann.readthedocs.io/en/latest/index.html)',
@@ -54,7 +54,7 @@ setup(
 
     python_requires='>=3.6, <4',
 
-    install_requires=['numpy', 'pandas', 'matplotlib', 'opencv-python'],
+    install_requires=['numpy', 'pandas', 'matplotlib', 'opencv-python', 'pillow'],
 
     extras_require={
         'dev': ['check-manifest',

@@ -88,7 +88,7 @@ Code Example:
    from imgann import Convertor
    Convertor.coco2voc(dataset_dir='../data/Hard Hat Sample.v5i.coco/test',
                       coco_ann_dir='../data/Hard Hat Sample.v5i.coco/test/_annotations.coco.json',
-                      save_dir='../data/coco2voc)
+                      save_dir='../data/coco2voc')
 
 .. data:: COCO to CSV
 
@@ -106,6 +106,17 @@ Code Example:
    Convertor.coco2csv(dataset_dir='../data/Hard Hat Sample.v5i.coco/test',
                       coco_ann_dir='../data/Hard Hat Sample.v5i.coco/test/_annotations.coco.json',
                       save_dir='../data/coco2csv.csv')
+
+.. data:: COCO to Yolo
+
+Code Example:
+
+.. code-block:: python
+
+   from imgann import Convertor
+   Convertor.coco2yolo(dataset_dir='../data/Hard Hat Sample.v5i.coco/test',
+                       coco_ann_dir='../data/Hard Hat Sample.v5i.coco/test/_annotations.coco.json',
+                       save_dir='../data/coco2yolo')
 
 .. data:: PascalVOC to COCO
 
@@ -129,6 +140,17 @@ Code Example:
                      voc_ann_dir='../data/Hard Hat Sample.v5.voc/test',
                      save_dir='../data/voc2csv.csv')
 
+.. data:: PascalVOC to Yolo
+
+Code Example:
+
+.. code-block:: python
+
+   from imgann import Convertor
+   Convertor.voc2yolo(dataset_dir='../data/Hard Hat Sample.v5.voc/test',
+                      voc_ann_dir='../data/Hard Hat Sample.v5.voc/test',
+                      save_dir='../data/voc2yolo')
+
 .. data:: CSV to COCO
 
 Code Example:
@@ -139,6 +161,17 @@ Code Example:
    Convertor.csv2coco(dataset_dir='../data/Hard Hat Sample.v5i.tensorflow/test/',
                       csv_ann_dir='../data/Hard Hat Sample.v5i.tensorflow/test/_annotations.csv',
                       save_dir='../data/csv2coco.json')
+
+.. data:: CSV to Yolo
+
+Code Example:
+
+.. code-block:: python
+
+   from imgann import Convertor
+   Convertor.csv2yolo(dataset_dir='../data/Hard Hat Sample.v5i.tensorflow/test',
+                      csv_ann_dir='../data/Hard Hat Sample.v5i.tensorflow/test/_annotations.csv',
+                      save_dir='../data/csv2yolo')
 
 .. data:: CSV to PascalVOC
 
@@ -163,6 +196,37 @@ Code Example:
 
 .. note::
    For more info on functional parameters, acceptable input formats and output format refer API pages.
+
+.. data:: Yolo to COCO
+
+Code Example:
+
+.. code-block:: python
+
+   Convertor.yolo2coco(dataset_dir='../data/Hard Hat Sample.v5i.darknet/test',
+                       yolo_ann_dir='../data/Hard Hat Sample.v5i.darknet/test',
+                       save_dir='../data/yolo2coco.json',
+                       center=True)
+
+.. data:: Yolo to PascalVOC
+
+Code Example:
+
+.. code-block:: python
+
+   Convertor.yolo2voc(dataset_dir='../data/Hard Hat Sample.v5i.darknet/test',
+                      yolo_ann_dir='../data/Hard Hat Sample.v5i.darknet/test',
+                      save_dir='../data/yolo2voc')
+
+.. data:: Yolo to CSV
+
+Code Example:
+
+.. code-block:: python
+
+   Convertor.yolo2csv(dataset_dir='../data/Hard Hat Sample.v5i.darknet/test',
+                      yolo_ann_dir='../data/Hard Hat Sample.v5i.darknet/test',
+                      save_dir='../data/yolo2csv.csv')
 
 Describe Image Dataset
 ----------------------
