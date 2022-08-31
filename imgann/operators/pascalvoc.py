@@ -163,10 +163,10 @@ class PascalVOC(IOperator, ABC):
         try:
             label = self.__tagFilter(obj.find('name').text)
             bndbox = obj.find('bndbox')
-            xmin = int(bndbox.find('xmin').text)
-            ymin = int(bndbox.find('ymin').text)
-            xmax = int(bndbox.find('xmax').text)
-            ymax = int(bndbox.find('ymax').text)
+            xmin = int(float(bndbox.find('xmin').text))
+            ymin = int(float(bndbox.find('ymin').text))
+            xmax = int(float(bndbox.find('xmax').text))
+            ymax = int(float(bndbox.find('ymax').text))
             ann = [xmin, ymin, xmax, ymax, label]
             return ann
         except Exception as error:
