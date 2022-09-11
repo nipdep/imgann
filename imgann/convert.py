@@ -69,7 +69,7 @@ class Convertor:
         voc_obj.set_annotations(ann)
         voc_obj.set_classes(cls)
         for xml, name in voc_obj.translate():
-            file_dir = save_dir + '/' + name.split('.')[0]+'.xml'
+            file_dir = save_dir + '/' + name.rsplit('.', 1)[0]+'.xml'
             voc_obj.archive(file_dir, xml)
 
     @staticmethod
@@ -98,7 +98,7 @@ class Convertor:
         yolo_obj.set_annotations(ann)
         yolo_obj.set_classes(cls)
         for data, name in yolo_obj.translate():
-            file_dir = save_dir + '/' + name.split('.')[0]+'.txt'
+            file_dir = save_dir + '/' + name.rsplit('.', 1)[0]+'.txt'
             yolo_obj.archive(file_dir, data)
 
     @staticmethod
@@ -150,7 +150,7 @@ class Convertor:
         voc_obj.set_annotations(ann)
         voc_obj.set_classes(cls)
         for xml, name in voc_obj.translate():
-            file_dir = save_dir + '/' + name.split('.')[0]+'.xml'
+            file_dir = save_dir + '/' + name.rsplit('.', 1)[0]+'.xml'
             voc_obj.archive(file_dir, xml)
 
     @staticmethod
@@ -177,7 +177,7 @@ class Convertor:
         yolo_obj.set_annotations(ann)
         yolo_obj.set_classes(cls)
         for data, name in yolo_obj.translate():
-            file_dir = save_dir + '/' + name.split('.')[0]+'.txt'
+            file_dir = save_dir + '/' + name.rsplit('.', 1)[0]+'.txt'
             yolo_obj.archive(file_dir, data)
 
     @staticmethod
@@ -255,7 +255,7 @@ class Convertor:
         yolo_obj.set_annotations(ann)
         yolo_obj.set_classes(cls)
         for data, name in yolo_obj.translate():
-            file_dir = save_dir + '/' + name.split('.')[0]+'.txt'
+            file_dir = save_dir + '/' + name.rsplit('.', 1)[0]+'.txt'
             yolo_obj.archive(file_dir, data)
 
     @staticmethod
@@ -324,7 +324,7 @@ class Convertor:
         voc_obj.set_annotations(ann)
         voc_obj.set_classes(cls)
         for xml, name in voc_obj.translate():
-            file_dir = save_dir + '/' + name.split('.')[0]+'.xml'
+            file_dir = save_dir + '/' + name.rsplit('.', 1)[0]+'.xml'
             voc_obj.archive(file_dir, xml)
 
     @staticmethod
