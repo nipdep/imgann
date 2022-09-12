@@ -12,7 +12,7 @@ setup(
     name='imgann',
 
 
-    version='0.8.0',
+    version='0.8.1',
 
 
     description='Image annotation file operation provider. [Documentation](https://imgann.readthedocs.io/en/latest/index.html)',
